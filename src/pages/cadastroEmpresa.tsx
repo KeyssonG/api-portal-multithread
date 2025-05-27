@@ -3,18 +3,14 @@ import styles from "../styles/CadastroEmpresa.module.css"; // CSS Module correto
 import { useNavigate } from "react-router-dom";
 
 interface FormData {
-  name: string;
   email: string;
-  cnpj: string;
   username: string;
   password: string;
 }
 
 const CadastroEmpresa: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    name: "",
     email: "",
-    cnpj: "",
     username: "",
     password: "",
   });
@@ -64,21 +60,10 @@ const CadastroEmpresa: React.FC = () => {
 
       <div className={styles["register-box"]}>
         <div className={styles["login-header"]}>
-          <header>Cadastrar Empresa</header>
+          <header>Cadastrar funcionário</header>
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className={styles["input-box"]}>
-            <input
-              className={styles["input-field"]}
-              type="text"
-              placeholder="Nome da Empresa"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
 
           <div className={styles["input-box"]}>
             <input
@@ -87,18 +72,6 @@ const CadastroEmpresa: React.FC = () => {
               placeholder="E-mail Corporativo"
               name="email"
               value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className={styles["input-box"]}>
-            <input
-              className={styles["input-field"]}
-              type="text"
-              placeholder="CNPJ"
-              name="cnpj"
-              value={formData.cnpj}
               onChange={handleChange}
               required
             />
