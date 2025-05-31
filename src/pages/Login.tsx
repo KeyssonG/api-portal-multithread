@@ -20,7 +20,7 @@ const Login = () => {
 
     console.log("Dados de login:", dadosLogin);
     try {
-      const response = await fetch("http://localhost:8087/login", {
+      const response = await fetch("http://localhost:8089/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

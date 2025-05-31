@@ -3,16 +3,22 @@ import styles from "../styles/CadastroEmpresa.module.css"; // CSS Module correto
 import { useNavigate } from "react-router-dom";
 
 interface FormData {
+  nome: string;
   email: string;
+  cpf: string
   username: string;
   password: string;
+  departamento: string;
 }
 
 const CadastroEmpresa: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
+    nome: "",
     email: "",
+    cpf: "",
     username: "",
     password: "",
+    departamento: ""
   });
 
   const navigate = useNavigate();
@@ -29,7 +35,7 @@ const CadastroEmpresa: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8085/register", {
+      const response = await fetch("http://localhost:8089/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,12 +44,9 @@ const CadastroEmpresa: React.FC = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Erro ao cadastrar empresa");
+        throw new Error("Erro ao cadastrar empresa");
       }
 
-      const data = await response.json();
-      console.log("Cadastro realizado:", data);
       alert("Empresa cadastrada com sucesso!");
       navigate("/login");
     } catch (error) {
@@ -64,6 +67,17 @@ const CadastroEmpresa: React.FC = () => {
         </div>
 
         <form onSubmit={handleSubmit}>
+          <div className={styles["input-box"]}>
+            <input
+              className={styles["input-field"]}
+              type="name"
+              placeholder="Seu nome"
+              name="nome"
+              value={formData.nome}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
           <div className={styles["input-box"]}>
             <input
@@ -72,6 +86,18 @@ const CadastroEmpresa: React.FC = () => {
               placeholder="E-mail Corporativo"
               name="email"
               value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className={styles["input-box"]}>
+            <input
+              className={styles["input-field"]}
+              type="text"
+              placeholder="Seu CPF"
+              name="cpf"
+              value={formData.cpf}
               onChange={handleChange}
               required
             />
@@ -96,6 +122,18 @@ const CadastroEmpresa: React.FC = () => {
               placeholder="Senha"
               name="password"
               value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className={styles["input-box"]}>
+            <input
+              className={styles["input-field"]}
+              type="text"
+              placeholder="Seu departamento"
+              name="departamento"
+              value={formData.departamento}
               onChange={handleChange}
               required
             />
