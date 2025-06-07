@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../styles/Login.module.css"; 
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -88,12 +89,7 @@ const Login = () => {
           </div>
         </form>
       </div>
-
-      <footer className={styles.footer}>
-        <p>O Sistema de Gestão ideal para o seu négocio.</p>
-        <p className={styles.reserved}>Todos os direitos reservados © 2025</p>
-        <p>Desenvolvimento por Keysson</p>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "../styles/CadastroEmpresa.module.css"; // CSS Module correto
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 interface FormData {
   nome: string;
@@ -153,11 +154,7 @@ const CadastroEmpresa: React.FC = () => {
         </form>
       </div>
 
-      <footer className={styles.footer}>
-        <p>O Sistema de Gestão ideal para o seu negócio.</p>
-        <p className={styles.reserved}>Todos os direitos reservados © 2025</p>
-        <p>Desenvolvimento por keysson</p>
-      </footer>
+      <Footer />
     </div>
   );
 };
