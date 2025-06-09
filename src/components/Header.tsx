@@ -1,52 +1,46 @@
-import { useState } from "react";
-
+import React from 'react';
+import styles from '../styles/Header.module.css';
 
 interface HeaderProps {
-    userName: string;
-    onLogout: () => void;
+  userName: string;
+  onLogout: () => void;
 }
 
-const Header = ({userName, onLogout}: HeaderProps) => {
-    const [showDropdown, setShowDropdown] = useState(false);
+const Header: React.FC<HeaderProps> = ({ userName, onLogout }) => {
+  const [showDropdown, setShowDropdown] = React.useState(false);
 
-    return (
-            <header>
-                <h1>Dashboard</h1>
+  return (
+    <header className={styles.header}>
+      {/* Logo / Título à esquerda */}
+      <h1 className={styles.headerTitle}>MultiThread</h1>
 
-                <div>
-                    <span>Olá, <strong>{userName}</strong></span>
+      {/* Menu centralizado */}
+      <div className={styles.menuContainer}>
+        <button
+          className={styles.dropdownButton}
+          onClick={() => setShowDropdown(!showDropdown)}
+        >
+          Consultas ▼
+        </button>
 
-                    <div>
-                        <button onClick={() => setShowDropdown(!showDropdown)}>
-                            Consultas
-                        </button>
+        {showDropdown && (
+          <ul className={styles.dropdownMenu}>
+            <li>
+              <a href="/dashboard/empresas-pendentes">Empresas Pendentes</a>
+            </li>
+          </ul>
+        )}
+      </div>
 
-                        {showDropdown && (
-                            <ul style={{
-                                position: 'absolute',
-                                top: '100%',
-                                left: 0,
-                                background: 'white',
-                                border: '1px solid #ccc',
-                                listStyle: 'none',
-                                margin: 0,
-                                padding: 0,
-                                zIndex: 1000
-                            }}>
-                                <li>
-                                    <a href="/dashboard/empresas-pendentes" style={{padding: '0.5rem 1rem', display: 'block'}}>
-                                        Empresas Pendentes
-                                    </a>
-                                </li>
-                            </ul>
-                        )}
-                    </div>
-
-                    <button onClick={onLogout}>Sair</button>
-                </div>
-            </header>
-    );
+      {/* Nome do usuário e logout à direita */}
+      <div className={styles.userActions}>
+        <span className={styles.userName}>Olá, <strong>{userName}</strong></span>
+        <button className={styles.logoutButton} onClick={onLogout}>
+          Sair
+        </button>
+      </div>
+    </header>
+  );
 };
 
 export default Header;
-
