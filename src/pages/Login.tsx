@@ -39,7 +39,7 @@ const Login = () => {
       const token = data.token;
 
       if (token) {
-        login(token);
+        login(token, username);
         navigate("/dashboard");
       } else {
         alert("Token não encontrado na resposta da API.");
