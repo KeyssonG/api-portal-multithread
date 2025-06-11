@@ -48,6 +48,36 @@ const Dashboard = () => {
     setEmpresaSelecionada(null)
   }
 
+  const handleAtualizarStatus = async (empresa: EmpresaPendente, newStatus: string) => {
+  try {
+    const response = await fetch(
+      `http://localhost:31000/administracao/status/conta?numeroConta=${empresa.numeroConta}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newStatus }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Erro ao atualizar status');
+    }
+
+    
+    setEmpresas((prev) =>
+      prev.filter((e) => e.id !== empresa.id)
+    );
+    
+    alert(`Status atualizado com sucesso!`);
+    setEmpresaSelecionada(null); 
+  } catch (err: any) {
+    alert(`Falha ao atualizar status: ${err.message}`);
+    console.error(err);
+  }
+};
+
   return (
     <div>
       <Header />
@@ -85,20 +115,33 @@ const Dashboard = () => {
           </>
         ) : (
           <div className={styles.cardExpanded}>
-            <h2>{empresaSelecionada.nome}</h2>
-            <p><strong>CNPJ:</strong> {empresaSelecionada.cnpj}</p>
-            <p><strong>Número da Conta:</strong> {empresaSelecionada.numeroConta}</p>
-            <p><strong>Status:</strong> {empresaSelecionada.status === 1 ? '1' : 'Pendente'}</p>
-            <p><strong>Descrição:</strong> {empresaSelecionada.descricao}</p>
+  <h2>{empresaSelecionada.nome}</h2>
+  <p><strong>CNPJ:</strong> {empresaSelecionada.cnpj}</p>
+  <p><strong>Número da Conta:</strong> {empresaSelecionada.numeroConta}</p>
+  <p><strong>Status:</strong> {empresaSelecionada.status === 1 ? '1' : 'Ativo'}</p>
+  <p><strong>Descrição:</strong> {empresaSelecionada.descricao}</p>
 
-            <div className={styles.cardActions}>
-              <button className={styles.approveButton}>Aprovar</button>
-              <button className={styles.rejectButton}>Rejeitar</button>
-              <button className={styles.backButton} onClick={handleVoltar}>
-                Voltar
-              </button>
-            </div>
-          </div>
+  <div className={styles.cardActions}>
+    <button
+      className={styles.approveButton}
+      onClick={() => handleAtualizarStatus(empresaSelecionada, "2")}
+    >
+      Aprovar
+    </button>
+    <button
+      className={styles.rejectButton}
+      onClick={() => handleAtualizarStatus(empresaSelecionada, "3")}
+    >
+      Rejeitar
+    </button>
+    <button
+      className={styles.backButton}
+      onClick={handleVoltar}
+    >
+      Voltar
+    </button>
+  </div>
+</div>
         )}
       </main>
       <Footer />
