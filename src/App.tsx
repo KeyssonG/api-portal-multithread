@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import './styles/global.css';
 import Dashboard from './pages/Dashboard';
 import CadastroEmpresa from './pages/cadastroEmpresa';
+import { DashboardProvider } from './contexts/DashboardContextType';
 
 const App = () => {
   return (
@@ -13,7 +14,10 @@ const App = () => {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/cadastrar" element={<CadastroEmpresa />} />
-            <Route path='/dashboard' element={<Dashboard />}></Route>
+            <Route path='/dashboard' element={
+              <DashboardProvider>
+                <Dashboard />
+              </DashboardProvider>}></Route>
             <Route path='/' element={<Login />}></Route>
           </Routes>
         </main>

@@ -4,14 +4,22 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Header.module.css';
 import { useAuth } from '../contexts/AuthContext';
 
+import { useDashboard } from '../contexts/DashboardContextType';
+
 const Header = () => {
   const { name, logout } = useAuth();
   const navigate = useNavigate();
+  const { setShowEmpresasPendentes } = useDashboard();
+
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleLogout = () => {
-    logout(); // Limpa o token e o nome do usuário
-    navigate('/login'); // Redireciona para a tela de login
+    logout();
+    navigate('/login');
+  };
+
+  const handleVerEmpresasPendentes = () => {
+    setShowEmpresasPendentes(true);
   };
 
   return (
@@ -29,7 +37,13 @@ const Header = () => {
         {showDropdown && (
           <ul className={styles.dropdownMenu}>
             <li>
-              <a href="/dashboard/empresas-pendentes">Empresas Pendentes</a>
+              <button
+                className={styles.dropdownItem}
+                onClick={handleVerEmpresasPendentes}
+                type="button"
+              >
+                Empresas Pendentes
+              </button>
             </li>
           </ul>
         )}
