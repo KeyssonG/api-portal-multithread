@@ -77,7 +77,7 @@ const Dashboard = () => {
                   <h3>{empresa.nome}</h3>
                   <p><strong>CNPJ:</strong> {empresa.cnpj}</p>
                   <p><strong>Número da Conta:</strong> {empresa.numeroConta}</p>
-                  <p><strong>Status:</strong> {empresa.status === 1 ? 'Ativo' : 'Pendente'}</p>
+                  <p><strong>Status:</strong> {empresa.status === 1 ? '1' : 'Pendente'}</p>
                   <p><strong>Descrição:</strong> {empresa.descricao}</p>
                 </div>
               ))}
@@ -88,7 +88,7 @@ const Dashboard = () => {
             <h2>{empresaSelecionada.nome}</h2>
             <p><strong>CNPJ:</strong> {empresaSelecionada.cnpj}</p>
             <p><strong>Número da Conta:</strong> {empresaSelecionada.numeroConta}</p>
-            <p><strong>Status:</strong> {empresaSelecionada.status === 1 ? 'Ativo' : 'Pendente'}</p>
+            <p><strong>Status:</strong> {empresaSelecionada.status === 1 ? '1' : 'Pendente'}</p>
             <p><strong>Descrição:</strong> {empresaSelecionada.descricao}</p>
 
             <div className={styles.cardActions}>
