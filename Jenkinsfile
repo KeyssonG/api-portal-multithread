@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_IMAGE = "keyssong/react-multithread-interno"
-        DEPLOYMENT_FILE = "k8s\\frontend-multithread-interno.deployment.yaml"
+        DEPLOYMENT_FILE = "k8s\\multithread-interno.deployment.yaml"
         IMAGE_TAG = "latest"
     }
 
