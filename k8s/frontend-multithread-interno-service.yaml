@@ -9,5 +9,5 @@ spec:
     - protocol: TCP
       port: 5174
       targetPort: 5174
-      nodePort: 31007
+      nodePort: 31008
   type: NodePort    
