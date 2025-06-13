@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-deployment
+  name: multithread-interno-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend-react
+      app: multithread-interno-react
   template:
     metadata:
       labels:
-        app: frontend-react
+        app: multithread-interno-react
     spec:
       containers:
-        - name: frontend-container
+        - name: multithread-interno-container
           image: keyssong/react-multithread-interno:latest  
           imagePullPolicy: Always              
           ports:
