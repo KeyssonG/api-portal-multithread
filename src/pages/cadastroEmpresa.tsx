@@ -48,7 +48,7 @@ const CadastroEmpresa: React.FC = () => {
         throw new Error("Erro ao cadastrar empresa");
       }
 
-      alert("Empresa cadastrada com sucesso!");
+      alert("Funcionário cadastrada com sucesso!");
       navigate("/login");
     } catch (error) {
       console.error("Falha no cadastro:", error);
