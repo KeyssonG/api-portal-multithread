@@ -1,39 +1,49 @@
 import React, { useState } from "react";
-import styles from "../styles/CadastroEmpresa.module.css"; // CSS Module correto
+import styles from "../styles/CadastroFuncionario.module.css";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
-
+import { IMaskInput } from "react-imask";
 interface FormData {
   nome: string;
   email: string;
-  cpf: string
+  cpf: string;
   username: string;
   password: string;
   departamento: string;
 }
 
-const CadastroEmpresa: React.FC = () => {
+const CadastroFuncionario: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     nome: "",
     email: "",
     cpf: "",
     username: "",
     password: "",
-    departamento: ""
+    departamento: "",
   });
 
   const navigate = useNavigate();
 
+  // Ajuste na tipagem para suportar eventos do InputMask
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    // Para o CPF, você pode remover a máscara antes de salvar no estado, se necessário
+    const formattedValue = name === "cpf" ? value.replace(/[^\d]/g, "") : value;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: formattedValue,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Validação opcional do CPF antes de enviar
+    const cpfRegex = /^\d{11}$/;
+    if (!cpfRegex.test(formData.cpf)) {
+      alert("Por favor, insira um CPF válido (11 dígitos numéricos).");
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:8089/register", {
@@ -45,10 +55,10 @@ const CadastroEmpresa: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Erro ao cadastrar empresa");
+        throw new Error("Erro ao cadastrar Funcionário.");
       }
 
-      alert("Funcionário cadastrada com sucesso!");
+      alert("Funcionário cadastrado com sucesso!");
       navigate("/login");
     } catch (error) {
       console.error("Falha no cadastro:", error);
@@ -71,7 +81,7 @@ const CadastroEmpresa: React.FC = () => {
           <div className={styles["input-box"]}>
             <input
               className={styles["input-field"]}
-              type="name"
+              type="text"
               placeholder="Seu nome"
               name="nome"
               value={formData.nome}
@@ -93,13 +103,15 @@ const CadastroEmpresa: React.FC = () => {
           </div>
 
           <div className={styles["input-box"]}>
-            <input
-              className={styles["input-field"]}
-              type="text"
-              placeholder="Seu CPF"
+            <IMaskInput
+              mask="000.000.000-00"
               name="cpf"
               value={formData.cpf}
-              onChange={handleChange}
+              onAccept={(value: string) =>
+                setFormData((prev) => ({ ...prev, cpf: value }))
+              }
+              className={styles["input-field"]}
+              placeholder="Seu CPF"
               required
             />
           </div>
@@ -159,4 +171,4 @@ const CadastroEmpresa: React.FC = () => {
   );
 };
 
-export default CadastroEmpresa;
+export default CadastroFuncionario;
