@@ -22,12 +22,8 @@ const CadastroFuncionario: React.FC = () => {
     departamento: "",
   });
 
-  const navigate = useNavigate();
-
-  // Ajuste na tipagem para suportar eventos do InputMask
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    // Para o CPF, você pode remover a máscara antes de salvar no estado, se necessário
     const formattedValue = name === "cpf" ? value.replace(/[^\d]/g, "") : value;
     setFormData((prev) => ({
       ...prev,
@@ -38,7 +34,6 @@ const CadastroFuncionario: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Validação opcional do CPF antes de enviar
     const cpfRegex = /^\d{11}$/;
     if (!cpfRegex.test(formData.cpf)) {
       alert("Por favor, insira um CPF válido (11 dígitos numéricos).");
@@ -46,7 +41,7 @@ const CadastroFuncionario: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8089/register", {
+      const response = await fetch("http://localhost:8089/cadastrar/funcionario", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +54,6 @@ const CadastroFuncionario: React.FC = () => {
       }
 
       alert("Funcionário cadastrado com sucesso!");
-      navigate("/login");
     } catch (error) {
       console.error("Falha no cadastro:", error);
       alert(error instanceof Error ? error.message : "Não foi possível realizar o cadastro.");
