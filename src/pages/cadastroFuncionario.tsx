@@ -114,19 +114,6 @@ const CadastroFuncionario: React.FC = () => {
               required
             />
           </div>
-
-          <div className={styles["input-box"]}>
-            <input
-              className={styles["input-field"]}
-              type="password"
-              placeholder="Senha"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
           <div className={styles["input-box"]}>
             <input
               className={styles["input-field"]}
