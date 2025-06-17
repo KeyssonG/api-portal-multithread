@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "../styles/CadastroFuncionario.module.css";
-import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { IMaskInput } from "react-imask";
 interface FormData {
