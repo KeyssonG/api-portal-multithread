@@ -33,12 +33,6 @@ const CadastroFuncionario: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const cpfRegex = /^\d{11}$/;
-    if (!cpfRegex.test(formData.cpf)) {
-      alert("Por favor, insira um CPF válido (11 dígitos numéricos).");
-      return;
-    }
-
     try {
       const response = await fetch("http://localhost:8089/cadastrar/funcionario", {
         method: "POST",
