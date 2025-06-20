@@ -5,8 +5,6 @@ const apiAdministracao = axios.create({
     baseURL: 'http://localhost:31000',
 });
 
-
-
 export const fechEmpresaPendentes = async (): Promise<EmpresaPendente[]> => {
     try {
         const response = await apiAdministracao.get<EmpresaPendente[]>('/administracao/empresa/pendente/?numeroConta=');
