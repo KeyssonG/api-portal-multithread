@@ -2,33 +2,23 @@ import { useEffect, useState } from "react";
 import styles from "../styles/dashboard.module.css"
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import type { EmpresaPendente } from "../types/types";
+import { useDashboard } from "../contexts/DashboardContextType";
+import { fechEmpresaPendentes, updateEmpresaStatus } from "../services/apiService";
+import EmpresaCard from "../components/EmpresaCard";
 
-
-interface EmpresaPendente {
-  id: number;
-  cnpj: string;
-  status: number;
-  descricao: string;
-  nome: string;
-  numeroConta: number;
-}
 
 const Dashboard = () => {
   const [empresas, setEmpresas] = useState<EmpresaPendente[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [empresaSelecionada, setEmpresaSelecionada] = useState<EmpresaPendente | null>(null);
+  const { empresaSelecionada, setEmpresaSelecionada } = useDashboard();
 
   useEffect(() => {
-    const fetchEmpresasPendentes = async () => {
+    const loadEmpresas = async () => {
+      setLoading(true);
       try {
-        const response = await fetch('http://localhost:31000/administracao/empresa/pendente/?numeroConta=');
-
-        if (!response.ok) {
-          throw new Error('Erro ao buscar empresas pendentes');
-        }
-
-        const data: EmpresaPendente[] = await response.json();
+        const data = await fechEmpresaPendentes();
         setEmpresas(data);
       } catch (err: any) {
         setError(err.message || 'Erro ao carregar empresas');
@@ -37,7 +27,8 @@ const Dashboard = () => {
       }
     };
 
-    fetchEmpresasPendentes();
+
+    loadEmpresas();
   }, []);
 
   const handleCardClick = (empresa: EmpresaPendente) => {
@@ -46,37 +37,21 @@ const Dashboard = () => {
 
   const handleVoltar = () => {
     setEmpresaSelecionada(null)
-  }
+  };
 
   const handleAtualizarStatus = async (empresa: EmpresaPendente, newStatus: string) => {
-  try {
-    const response = await fetch(
-      `http://localhost:31000/administracao/status/conta?numeroConta=${empresa.numeroConta}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ newStatus }),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error('Erro ao atualizar status');
+    if (!empresaSelecionada) return;
+    
+    try {
+      await updateEmpresaStatus(empresaSelecionada, newStatus);
+      alert(`Status atualizado com sucesso!`);
+      setEmpresaSelecionada(null);
+      setEmpresas(empresas.filter((e) => e.id !== empresaSelecionada.id));
+    } catch (err: any) {
+      alert(`Falha ao atualizar status: ${err.message}`);
+      console.error(err);
     }
-
-    
-    setEmpresas((prev) =>
-      prev.filter((e) => e.id !== empresa.id)
-    );
-    
-    alert(`Status atualizado com sucesso!`);
-    setEmpresaSelecionada(null); 
-  } catch (err: any) {
-    alert(`Falha ao atualizar status: ${err.message}`);
-    console.error(err);
-  }
-};
+  };
 
   return (
     <div>
@@ -98,50 +73,43 @@ const Dashboard = () => {
 
             <div className={styles.cards}>
               {empresas.map((empresa) => (
-                <div
+                <EmpresaCard 
                   key={empresa.id}
-                  className={styles.card}
-                  onClick={() => handleCardClick(empresa)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <h3>{empresa.nome}</h3>
-                  <p><strong>CNPJ:</strong> {empresa.cnpj}</p>
-                  <p><strong>Número da Conta:</strong> {empresa.numeroConta}</p>
-                  <p><strong>Status:</strong> {empresa.status === 1 ? '1' : 'Pendente'}</p>
-                  <p><strong>Descrição:</strong> {empresa.descricao}</p>
-                </div>
+                  empresa={empresa}
+                  onClick={handleCardClick}
+                />
               ))}
             </div>
           </>
         ) : (
           <div className={styles.cardExpanded}>
-  <h2>{empresaSelecionada.nome}</h2>
-  <p><strong>CNPJ:</strong> {empresaSelecionada.cnpj}</p>
-  <p><strong>Número da Conta:</strong> {empresaSelecionada.numeroConta}</p>
-  <p><strong>Status:</strong> {empresaSelecionada.status === 1 ? '1' : 'Ativo'}</p>
-  <p><strong>Descrição:</strong> {empresaSelecionada.descricao}</p>
+            <h2>{empresaSelecionada.nome}</h2>
+            <p><strong>CNPJ:</strong> {empresaSelecionada.cnpj}</p>
+            <p><strong>Número da Conta:</strong> {empresaSelecionada.numeroConta}</p>
+            <p><strong>Status:</strong> {empresaSelecionada.status === 1 ? '1' : 'Ativo'}</p>
+            <p><strong>Descrição:</strong> {empresaSelecionada.descricao}</p>
 
-  <div className={styles.cardActions}>
-    <button
-      className={styles.approveButton}
-      onClick={() => handleAtualizarStatus(empresaSelecionada, "2")}
-    >
-      Aprovar
-    </button>
-    <button
-      className={styles.rejectButton}
-      onClick={() => handleAtualizarStatus(empresaSelecionada, "3")}
-    >
-      Rejeitar
-    </button>
-    <button
-      className={styles.backButton}
-      onClick={handleVoltar}
-    >
-      Voltar
-    </button>
-  </div>
-</div>
+            <div className={styles.cardActions}>
+              <button
+                className={styles.approveButton}
+                onClick={() => handleAtualizarStatus(empresaSelecionada, "2")}
+              >
+                Aprovar
+              </button>
+              <button
+                className={styles.rejectButton}
+                onClick={() => handleAtualizarStatus(empresaSelecionada, "3")}
+              >
+                Rejeitar
+              </button>
+              <button
+                className={styles.backButton}
+                onClick={handleVoltar}
+              >
+                Voltar
+              </button>
+            </div>
+          </div>
         )}
       </main>
       <Footer />

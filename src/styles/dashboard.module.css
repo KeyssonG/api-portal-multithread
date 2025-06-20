@@ -1,13 +1,13 @@
 .dashboard {
-  padding: 80px 2rem 2rem 2rem; /* padding-top maior para evitar sobreposição */
+  padding: 80px 2rem 2rem 2rem;
   min-height: 100vh;
   background-color: #f9f9f9;
 }
 
 .title {
   font-size: 1.8rem;
-  margin-bottom: 1rem;
   color: #333;
+  margin-bottom: 1rem;
 }
 
 .subtitle {
@@ -20,7 +20,6 @@
 .error {
   font-size: 1rem;
   margin-top: 1rem;
-  color: #d9534f;
 }
 
 .empty {
@@ -33,54 +32,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
-}
-
-.card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.3s;
-  background-color: white;
-}
-
-.card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.card h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-.card p {
-  margin: 6px 0;
-  color: #333;
-}
-
-.card-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 1rem;
-}
-
-.card-button-approve,
-.card-button-reject {
-  flex: 1;
-  padding: 6px 10px;
-  border: none;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.card-button-approve {
-  background-color: #28a745;
-}
-
-.card-button-reject {
-  background-color: #dc3545;
 }
 
 .cardExpanded {
@@ -101,9 +52,9 @@
 
 .approveButton {
   padding: 0.6rem 1.2rem;
-  border: none;
   background-color: #28a745;
   color: white;
+  border: none;
   font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
@@ -111,9 +62,9 @@
 
 .rejectButton {
   padding: 0.6rem 1.2rem;
-  border: none;
   background-color: #dc3545;
   color: white;
+  border: none;
   font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
@@ -121,19 +72,9 @@
 
 .backButton {
   padding: 0.6rem 1.2rem;
-  border: none;
   background-color: #6c757d;
   color: white;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.backButton {
-  padding: 0.6rem 1.2rem;
   border: none;
-  background-color: #6c757d;
-  color: white;
   font-weight: bold;
   border-radius: 4px;
   cursor: pointer;
