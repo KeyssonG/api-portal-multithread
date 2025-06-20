@@ -39,7 +39,7 @@ const Dashboard = () => {
     setEmpresaSelecionada(null)
   };
 
-  const handleAtualizarStatus = async (empresa: EmpresaPendente, newStatus: string) => {
+  const handleAtualizarStatus = async (newStatus: string) => {
     if (!empresaSelecionada) return;
     
     try {
@@ -92,13 +92,13 @@ const Dashboard = () => {
             <div className={styles.cardActions}>
               <button
                 className={styles.approveButton}
-                onClick={() => handleAtualizarStatus(empresaSelecionada, "2")}
+                onClick={() => handleAtualizarStatus("2")}
               >
                 Aprovar
               </button>
               <button
                 className={styles.rejectButton}
-                onClick={() => handleAtualizarStatus(empresaSelecionada, "3")}
+                onClick={() => handleAtualizarStatus("3")}
               >
                 Rejeitar
               </button>
