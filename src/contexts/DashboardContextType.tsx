@@ -4,18 +4,28 @@ import type { EmpresaPendente } from "../types/types";
 interface DashboardContextType {
     empresaSelecionada: EmpresaPendente | null;
     setEmpresaSelecionada: (empresa: EmpresaPendente | null) => void;
+    showEmpresasPendentes: boolean;
+    setShowEmpresasPendentes: (value: boolean) => void;
 }
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
 
-export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [empresaSelecionada, setEmpresaSelecionada] = useState<EmpresaPendente | null>(null);
+export const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
+  const [empresaSelecionada, setEmpresaSelecionada] = useState<EmpresaPendente | null>(null);
+  const [showEmpresasPendentes, setShowEmpresasPendentes] = useState(false);
 
-    return (
-        <DashboardContext.Provider value={{ empresaSelecionada, setEmpresaSelecionada }}>
-            {children}
-        </DashboardContext.Provider>
-    );
+  return (
+    <DashboardContext.Provider
+      value={{
+        empresaSelecionada,
+        setEmpresaSelecionada,
+        showEmpresasPendentes,
+        setShowEmpresasPendentes,
+      }}
+    >
+      {children}
+    </DashboardContext.Provider>
+  );
 };
 
 export const useDashboard = () => {
