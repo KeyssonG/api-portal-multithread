@@ -9,7 +9,7 @@ const apiAdministracao = axios.create({
 
 export const fechEmpresaPendentes = async (): Promise<EmpresaPendente[]> => {
     try {
-        const response = await apiAdministracao.get('/administracao/empresa/pendente/?numeroConta=');
+        const response = await apiAdministracao.get<EmpresaPendente[]>('/administracao/empresa/pendente/?numeroConta=');
         return response.data;
     } catch (err: any) {
         throw new Error('Erro ao buscar empresas pendentes');
