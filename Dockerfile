@@ -2,6 +2,8 @@ FROM node:20 AS builder
 
 WORKDIR /app
 
+RUN npm cache clean --force
+
 COPY package.json package-lock.json ./
 RUN npm install
 

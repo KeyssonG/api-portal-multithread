@@ -1,5 +1,5 @@
 {
-  "name": "gestaon",
+  "name": "portal-multithread",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,8 +9,11 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+
   "dependencies": {
+    "@types/axios": "^0.9.36",
     "@types/react-router": "^5.1.20",
+    "axios": "^1.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-imask": "^7.6.1",
