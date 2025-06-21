@@ -1,6 +1,6 @@
 
 import { Routes, Route } from 'react-router-dom';
-import Login from './pages/Login';
+import  Login  from './pages/Login';
 import './styles/global.css';
 import Dashboard from './pages/Dashboard';
 import { DashboardProvider } from './contexts/DashboardContextType';
@@ -18,10 +18,10 @@ const App = () => {
             <Route path='/dashboard' element={
               <PrivateRoute>
                 <DashboardProvider>
-                <Dashboard />
-              </DashboardProvider>
+                  <Dashboard />
+                </DashboardProvider>
               </PrivateRoute>
-              }></Route>
+            }></Route>
             <Route path='/' element={<Login />}></Route>
           </Routes>
         </main>
