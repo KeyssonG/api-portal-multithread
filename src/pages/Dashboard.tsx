@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import type { EmpresaPendente } from "../types/types";
 import { useDashboard } from "../contexts/DashboardContextType";
-import { fechEmpresaPendentes, updateEmpresaStatus } from "../services/apiService";
+import { fechEmpresaPendentes, updateEmpresaStatus } from "../services/empresaService";
 import EmpresaCard from "../components/EmpresaCard";
 
 

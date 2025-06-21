@@ -16,11 +16,28 @@ const Header = () => {
   const handleLogout = () => {
     logout();
     navigate('/login');
+    setShowDropdown(false);
   };
 
   const handleVerEmpresasPendentes = () => {
     setShowEmpresasPendentes(true);
+    setShowDropdown(false);
+    navigate('/dashboard');
   };
+
+  const handleClickOutside = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest(`.${styles.menuContainer}`)) {
+      setShowDropdown(false);
+    }
+  }
+
+  useState(() => {
+    document.addEventListener('click', handleClickOutside as any);
+    return () => {
+      document.removeEventListener('click', handleClickOutside as any);
+    }
+  })
 
   return (
     <header className={styles.header}>

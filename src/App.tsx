@@ -5,6 +5,7 @@ import './styles/global.css';
 import Dashboard from './pages/Dashboard';
 import { DashboardProvider } from './contexts/DashboardContextType';
 import CadastroFuncionario from './pages/cadastroFuncionario';
+import { PrivateRoute } from './components/PrivateRoute';
 
 const App = () => {
   return (
@@ -15,9 +16,12 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/cadastrar" element={<CadastroFuncionario />} />
             <Route path='/dashboard' element={
-              <DashboardProvider>
+              <PrivateRoute>
+                <DashboardProvider>
                 <Dashboard />
-              </DashboardProvider>}></Route>
+              </DashboardProvider>
+              </PrivateRoute>
+              }></Route>
             <Route path='/' element={<Login />}></Route>
           </Routes>
         </main>

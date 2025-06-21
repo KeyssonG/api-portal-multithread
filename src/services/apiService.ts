@@ -1,25 +1,28 @@
 import axios from 'axios';
-import type { EmpresaPendente } from "../types/types";
 
-const apiAdministracao = axios.create({
-    baseURL: 'http://localhost:31000',
+const api = axios.create({
+  baseURL: 'http://localhost:31000',
 });
 
-export const fechEmpresaPendentes = async (): Promise<EmpresaPendente[]> => {
-    try {
-        const response = await apiAdministracao.get<EmpresaPendente[]>('/administracao/empresa/pendente/?numeroConta=');
-        return response.data;
-    } catch (err: any) {
-        throw new Error('Erro ao buscar empresas pendentes');
-    }
-};
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers = config.headers || {};
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
-export const updateEmpresaStatus = async (empresa: EmpresaPendente, newStatus: string): Promise<void> => {
-    try {
-        await apiAdministracao.put(`/administracao/status/conta?numeroConta=${empresa.numeroConta}`, {
-            newStatus,
-        });
-    } catch (err: any) {
-        throw new Error('Erro ao atualizar status da empresa');
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+      window.location.href = '/login';
     }
-};
+    return Promise.reject(error);
+  }
+);
+
+export default api;
