@@ -3,7 +3,7 @@ import type { CadastroFuncionarioFormState } from '../hooks/useCadastroFuncionar
 
 export async function cadastrarFuncionario(data: CadastroFuncionarioFormState) {
   try {
-    const response = await axios.post('http://localhost:8089/cadastrar/funcionario', data);
+    const response = await axios.post('https://localhost:8089/cadastrar/funcionario', data);
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.message || 'Erro ao cadastrar Funcionário.');
