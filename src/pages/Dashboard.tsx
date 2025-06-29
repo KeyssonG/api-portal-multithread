@@ -2,33 +2,45 @@ import { useEffect, useState } from "react";
 import styles from "../styles/dashboard.module.css"
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import type { EmpresaPendente } from "../types/types";
+import type { EmpresaPendente, StatusEmpresaData } from "../types/types";
 import { useDashboard } from "../contexts/DashboardContextType";
-import { fechEmpresaPendentes, updateEmpresaStatus } from "../services/empresaService";
+import { fechEmpresaPendentes, getStatusEmpresas, updateEmpresaStatus } from "../services/empresaService";
 import EmpresaCard from "../components/EmpresaCard";
-
+import { StatusEmpresaBarChart } from "../components/StatusEmpresaBarChart";
 
 const Dashboard = () => {
   const [empresas, setEmpresas] = useState<EmpresaPendente[]>([]);
+  const [statusData, setStatusData] = useState<StatusEmpresaData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { empresaSelecionada, setEmpresaSelecionada } = useDashboard();
 
   useEffect(() => {
-    const loadEmpresas = async () => {
+    const loadData = async () => {
       setLoading(true);
       try {
-        const data = await fechEmpresaPendentes();
-        setEmpresas(data);
+        // Carregar empresas primeiro
+        const empresasData = await fechEmpresaPendentes();
+        setEmpresas(empresasData);
+        
+        // Carregar dados de status separadamente
+        try {
+          const statusData = await getStatusEmpresas();
+          setStatusData(statusData);
+        } catch (statusError: any) {
+          // Se falhar ao carregar status, não quebra o carregamento das empresas
+          console.error('Erro ao carregar dados de status:', statusError);
+          setError(`Erro ao carregar estatísticas: ${statusError.message}`);
+        }
+        
       } catch (err: any) {
-        setError(err.message || 'Erro ao carregar empresas');
+        setError(err.message || 'Erro ao carregar dados');
       } finally {
         setLoading(false);
       }
     };
 
-
-    loadEmpresas();
+    loadData();
   }, []);
 
   const handleCardClick = (empresa: EmpresaPendente) => {
@@ -47,11 +59,27 @@ const Dashboard = () => {
       alert(`Status atualizado com sucesso!`);
       setEmpresaSelecionada(null);
       setEmpresas(empresas.filter((e) => e.id !== empresaSelecionada.id));
+      
+      // Recarregar dados de status
+      try {
+        const newStatusData = await getStatusEmpresas();
+        setStatusData(newStatusData);
+      } catch (statusError) {
+        console.error('Erro ao atualizar estatísticas:', statusError);
+      }
     } catch (err: any) {
       alert(`Falha ao atualizar status: ${err.message}`);
       console.error(err);
     }
   };
+
+const processarDadosGrafico = (data: StatusEmpresaData) => {
+  return [
+    { name: 'Pendente', value: Number(data?.pendente ?? 0) },
+    { name: 'Ativo', value: Number(data?.ativo ?? 0) },
+    { name: 'Rejeitado', value: Number(data?.rejeitado ?? 0) }
+  ];
+};
 
   return (
     <div>
@@ -63,6 +91,14 @@ const Dashboard = () => {
             <p className={styles.subtitle}>
               Confira abaixo a lista de empresas aguardando análise:
             </p>
+
+            {/* Mostrar gráfico apenas se tiver dados de status */}
+            {statusData && (
+              <div className={styles.statusContainer}>
+                <h3>Estatísticas de Status das Empresas</h3>
+                <StatusEmpresaBarChart data={processarDadosGrafico(statusData)} />
+              </div>
+            )}
 
             {loading && <p className={styles.loading}>Carregando empresas...</p>}
             {error && <p className={styles.error}>{error}</p>}

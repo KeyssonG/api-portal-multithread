@@ -6,3 +6,9 @@ export interface EmpresaPendente {
     nome: string;
     numeroConta: number;
 }
+
+export interface StatusEmpresaData {
+    pendente: number;
+    ativo: number;
+    rejeitado: number;
+}

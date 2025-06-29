@@ -1,4 +1,4 @@
-import type { EmpresaPendente } from "../types/types";
+import type { EmpresaPendente, StatusEmpresaData } from "../types/types";
 import api from "./apiService";
 
 
@@ -21,3 +21,12 @@ export const updateEmpresaStatus = async (empresa: EmpresaPendente, newStatus: s
         throw new Error(err.response?.data?.message || 'Erro ao atualizar status da empresa');
     }
 };
+
+export const getStatusEmpresas = async (): Promise<StatusEmpresaData> => {
+    try {
+        const response = await api.get<StatusEmpresaData>('/administracao/empresa/status');
+        return response.data;
+    } catch (err: any) {
+        throw new Error(err.response?.data?.message || 'Erro ao buscar status das empresas');
+    }
+}
