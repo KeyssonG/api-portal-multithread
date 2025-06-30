@@ -4,9 +4,15 @@ const authApi = axios.create({
   baseURL: 'http://localhost:8089', 
 });
 
+type LoginResponse = {
+  token: string;
+  [key: string]: any;
+};
+
 export const authService = {
-  async login<T = any>(username: string, password: string): Promise<{ data: T }> {
-    const response = await authApi.post<T>('/login', { username, password });
+  async login(username: string, password: string): Promise<{ data: LoginResponse }> {
+    const response = await authApi.post<LoginResponse>('/login', { username, password });
+    localStorage.setItem('token', response.data.token);
     return response;
   },
 
