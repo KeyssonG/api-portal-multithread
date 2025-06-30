@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Header.module.css';
@@ -9,9 +9,10 @@ import { useDashboard } from '../contexts/DashboardContextType';
 const Header = () => {
   const { name, logout } = useAuth();
   const navigate = useNavigate();
-  const { setShowEmpresasPendentes } = useDashboard();
+  const { setEmpresaSelecionada, setShowEmpresasPendentes } = useDashboard();
 
   const [showDropdown, setShowDropdown] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
     logout();
@@ -25,32 +26,34 @@ const Header = () => {
     navigate('/dashboard');
   };
 
-  const handleClickOutside = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    if (!target.closest(`.${styles.menuContainer}`)) {
-      setShowDropdown(false);
-    }
-  }
+  const handleLogoClick = () => {
+    setEmpresaSelecionada(null);
+    setShowEmpresasPendentes(false);
+    navigate('/dashboard');
+  };
 
-  useState(() => {
-    document.addEventListener('click', handleClickOutside as any);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener('click', handleClickOutside as any);
-    }
-  })
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <header className={styles.header}>
-      <h1 className={styles.headerTitle}>MultiThread</h1>
-
-      <div className={styles.menuContainer}>
+      <h1 className={styles.headerTitle} onClick={handleLogoClick} style={{ cursor: 'pointer' }}>MultiThread</h1>
+      <div className={styles.menuContainer} ref={menuRef}>
         <button
           className={styles.dropdownButton}
-          onClick={() => setShowDropdown(!showDropdown)}
+          onClick={() => setShowDropdown((prev) => !prev)}
         >
           Consultas ▼
         </button>
-
         {showDropdown && (
           <ul className={styles.dropdownMenu}>
             <li>
@@ -59,6 +62,7 @@ const Header = () => {
                 onClick={handleVerEmpresasPendentes}
                 type="button"
               >
+                <span role="img" aria-label="empresas" style={{ marginRight: 8 }}>🏢</span>
                 Empresas Pendentes
               </button>
             </li>

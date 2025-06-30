@@ -1,5 +1,5 @@
 .dashboard {
-  padding: 80px 2rem 2rem 2rem;
+  padding: 80px 2rem 120px 2rem;
   min-height: 100vh;
   background-color: #f9f9f9;
 }
@@ -30,56 +30,121 @@
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.cardExpanded,
+.empresaCard {
+  border: 2px solid #1976d2;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  background-color: #fff;
+  box-shadow: 0 4px 18px rgba(25, 118, 210, 0.08);
+  transition:
+    box-shadow 0.2s,
+    border 0.2s,
+    transform 0.1s;
+  margin-bottom: 1.5rem;
 }
 
 .cardExpanded {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 2rem;
-  background-color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  margin: 0 auto;
+  border: 3px solid #1976d2;
+  border-radius: 18px;
+  padding: 2.5rem 2rem;
+  background-color: #fff;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.16);
+  max-width: 650px;
+  margin: 2rem auto 2rem auto;
+  transition: box-shadow 0.2s, border 0.2s, transform 0.1s;
+}
+
+.cards .empresaCard:hover {
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.16);
+  border-color: #1565c0;
+  transform: translateY(-4px) scale(1.02);
+}
+
+.empresaCard h2 {
+  color: #1976d2;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.cardExpanded h2 {
+  color: #111;
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.empresaCard p {
+  color: #444;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.cardExpanded p {
+  color: #111;
+  font-size: 1.1rem;
+  margin-bottom: 0.7rem;
+}
+
+.cardExpanded strong {
+  color: #111;
+  font-weight: 700;
+  margin-right: 0.3rem;
 }
 
 .cardActions {
   display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  justify-content: center;
 }
 
-.approveButton {
-  padding: 0.6rem 1.2rem;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  font-weight: bold;
-  border-radius: 4px;
+.cardActions button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.7rem 1.5rem;
+  background: #fff;
+  border: 2px solid #1976d2;
+  color: #111;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+  transition: background 0.2s, color 0.2s, border 0.2s, transform 0.1s;
 }
 
-.rejectButton {
-  padding: 0.6rem 1.2rem;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
+.cardActions .approveButton {
+  border-color: #43a047;
+}
+.cardActions .approveButton:hover {
+  background: #43a047;
+  color: #fff;
 }
 
-.backButton {
-  padding: 0.6rem 1.2rem;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
+.cardActions .rejectButton {
+  border-color: #e53935;
+}
+.cardActions .rejectButton:hover {
+  background: #e53935;
+  color: #fff;
 }
 
+.cardActions .backButton {
+  border-color: #6c757d;
+}
+.cardActions .backButton:hover {
+  background: #6c757d;
+  color: #fff;
+}
 
 .chartContainer {
   background: white;

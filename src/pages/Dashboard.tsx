@@ -13,22 +13,19 @@ const Dashboard = () => {
   const [statusData, setStatusData] = useState<StatusEmpresaData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { empresaSelecionada, setEmpresaSelecionada } = useDashboard();
+  const { empresaSelecionada, setEmpresaSelecionada, showEmpresasPendentes } = useDashboard();
 
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
       try {
-        // Carregar empresas primeiro
         const empresasData = await fechEmpresaPendentes();
         setEmpresas(empresasData);
-        
-        // Carregar dados de status separadamente
+
         try {
           const statusData = await getStatusEmpresas();
           setStatusData(statusData);
         } catch (statusError: any) {
-          // Se falhar ao carregar status, não quebra o carregamento das empresas
           console.error('Erro ao carregar dados de status:', statusError);
           setError(`Erro ao carregar estatísticas: ${statusError.message}`);
         }
@@ -85,28 +82,26 @@ const processarDadosGrafico = (data: StatusEmpresaData) => {
     <div>
       <Header />
       <main className={styles.dashboard}>
-        {!empresaSelecionada ? (
+        {/* Gráfico sempre visível na página principal */}
+        {statusData && !empresaSelecionada && (
+          <div className={styles.statusContainer}>
+            <h3>Estatísticas de Status das Empresas</h3>
+            <StatusEmpresaBarChart data={processarDadosGrafico(statusData)} />
+          </div>
+        )}
+
+        {/* Empresas pendentes só se solicitado */}
+        {showEmpresasPendentes && !empresaSelecionada ? (
           <>
             <h2 className={styles.title}>Empresas Pendentes</h2>
             <p className={styles.subtitle}>
               Confira abaixo a lista de empresas aguardando análise:
             </p>
-
-            {/* Mostrar gráfico apenas se tiver dados de status */}
-            {statusData && (
-              <div className={styles.statusContainer}>
-                <h3>Estatísticas de Status das Empresas</h3>
-                <StatusEmpresaBarChart data={processarDadosGrafico(statusData)} />
-              </div>
-            )}
-
             {loading && <p className={styles.loading}>Carregando empresas...</p>}
             {error && <p className={styles.error}>{error}</p>}
-
             {!loading && !error && empresas.length === 0 && (
               <p className={styles.empty}>Nenhuma empresa pendente encontrada.</p>
             )}
-
             <div className={styles.cards}>
               {empresas.map((empresa) => (
                 <EmpresaCard 
@@ -117,36 +112,35 @@ const processarDadosGrafico = (data: StatusEmpresaData) => {
               ))}
             </div>
           </>
-        ) : (
+        ) : empresaSelecionada ? (
           <div className={styles.cardExpanded}>
             <h2>{empresaSelecionada.nome}</h2>
             <p><strong>CNPJ:</strong> {empresaSelecionada.cnpj}</p>
             <p><strong>Número da Conta:</strong> {empresaSelecionada.numeroConta}</p>
             <p><strong>Status:</strong> {empresaSelecionada.status === 1 ? '1' : 'Ativo'}</p>
             <p><strong>Descrição:</strong> {empresaSelecionada.descricao}</p>
-
             <div className={styles.cardActions}>
               <button
                 className={styles.approveButton}
                 onClick={() => handleAtualizarStatus("2")}
               >
-                Aprovar
+                <span role="img" aria-label="Aprovar">✅</span> Aprovar
               </button>
               <button
                 className={styles.rejectButton}
                 onClick={() => handleAtualizarStatus("3")}
               >
-                Rejeitar
+                <span role="img" aria-label="Rejeitar">❌</span> Rejeitar
               </button>
               <button
                 className={styles.backButton}
                 onClick={handleVoltar}
               >
-                Voltar
+                <span role="img" aria-label="Voltar">🔙</span> Voltar
               </button>
             </div>
           </div>
-        )}
+        ) : null}
       </main>
       <Footer />
     </div>

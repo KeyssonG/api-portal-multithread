@@ -80,6 +80,30 @@
   cursor: pointer;
 }
 
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s, color 0.2s, border 0.2s, transform 0.1s;
+}
+
+.dropdownItem:hover {
+  background: #fff;
+  color: #000;
+  border-color: #000;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
 /* Media Queries */
 
 @media (max-width: 768px) {
