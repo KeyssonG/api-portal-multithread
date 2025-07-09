@@ -10,6 +10,7 @@ interface Props {
   password: string;
   departamento: string;
   error: string;
+  success: boolean;
   isLoading: boolean;
   onNomeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -28,6 +29,7 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
   password,
   departamento,
   error,
+  success,
   isLoading,
   onNomeChange,
   onEmailChange,
@@ -38,7 +40,6 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
   onSubmit,
 }) => (
   <form className={styles.form} onSubmit={onSubmit}>
-    <h2>Cadastro de Funcionário</h2>
     <input
       type="text"
       placeholder="Nome"
@@ -83,6 +84,7 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
       required
     />
     {error && <div className={styles.error}>{error}</div>}
+    {success && <div className={styles.success}>Funcionário cadastrado com sucesso!</div>}
     <button type="submit" disabled={isLoading}>
       {isLoading ? 'Cadastrando...' : 'Cadastrar'}
     </button>

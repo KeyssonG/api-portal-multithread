@@ -24,6 +24,7 @@ const CadastroFuncionario: React.FC = () => {
           password={formState.password}
           departamento={formState.departamento}
           error={apiState.error}
+          success={apiState.success}
           isLoading={apiState.isLoading}
           onNomeChange={e => formActions.setNome(e.target.value)}
           onEmailChange={e => formActions.setEmail(e.target.value)}

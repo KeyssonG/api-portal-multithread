@@ -37,13 +37,28 @@ export function useCadastroFuncionarioForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Iniciando cadastro de funcionário:', formState);
+    
     setApiState({ isLoading: true, error: '', success: false });
+    
     try {
-      await cadastrarFuncionario(formState);
+      const result = await cadastrarFuncionario(formState);
+      console.log('Funcionário cadastrado com sucesso:', result);
       setApiState({ isLoading: false, error: '', success: true });
       formActions.reset();
+      
+      // Mostrar mensagem de sucesso por alguns segundos
+      setTimeout(() => {
+        setApiState(prev => ({ ...prev, success: false }));
+      }, 3000);
+      
     } catch (err: any) {
-      setApiState({ isLoading: false, error: err.message || 'Erro ao cadastrar', success: false });
+      console.error('Erro no cadastro de funcionário:', err);
+      setApiState({ 
+        isLoading: false, 
+        error: err.message || 'Erro ao cadastrar funcionário. Tente novamente.', 
+        success: false 
+      });
     }
   };
 
