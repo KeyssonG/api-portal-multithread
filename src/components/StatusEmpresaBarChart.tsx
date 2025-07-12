@@ -1,5 +1,5 @@
 // StatusEmpresaBarChart.tsx
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList, Cell } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 interface StatusData {
   name: string;
@@ -7,7 +7,7 @@ interface StatusData {
 }
 
 export function StatusEmpresaBarChart({ data }: { data: StatusData[] }) {
-  const getBarColor = (name: string) => {
+  const getPieColor = (name: string) => {
     if (name === 'Pendente') return '#ffc107'; // amarelo
     if (name === 'Ativo') return '#43a047'; // verde
     if (name === 'Rejeitado') return '#e53935'; // vermelho
@@ -18,17 +18,24 @@ export function StatusEmpresaBarChart({ data }: { data: StatusData[] }) {
     <div style={{ background: '#fff', borderRadius: 16, boxShadow: '0 2px 16px rgba(0,0,0,0.10)', padding: 32, margin: '0 auto', maxWidth: 900 }}>
       <h3 style={{ textAlign: 'center', marginBottom: 32, color: '#222', fontSize: 28 }}>Estatísticas de Status das Empresas</h3>
       <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={data} barSize={96}>
-          <XAxis dataKey="name" tick={{ fontWeight: 600, fontSize: 20 }} />
-          <YAxis allowDecimals={false} tick={{ fontSize: 18 }} />
-          <Tooltip />
-          <Bar dataKey="value" radius={[12, 12, 0, 0]}>
-            <LabelList dataKey="value" position="top" style={{ fontWeight: 700, fontSize: 22 }} />
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            innerRadius={80}
+            outerRadius={140}
+            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+          >
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={getBarColor(entry.name)} />
+              <Cell key={`cell-${index}`} fill={getPieColor(entry.name)} />
             ))}
-          </Bar>
-        </BarChart>
+          </Pie>
+          <Tooltip formatter={(value: number) => `${value}`} />
+          <Legend />
+        </PieChart>
       </ResponsiveContainer>
     </div>
   );
