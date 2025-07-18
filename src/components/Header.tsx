@@ -26,6 +26,11 @@ const Header = () => {
     navigate('/dashboard');
   };
 
+  const handleUserProjection = () => {
+    setShowDropdown(false);
+    navigate('/user-projection')
+  }
+
   const handleLogoClick = () => {
     setEmpresaSelecionada(null);
     setShowEmpresasPendentes(false);
@@ -64,6 +69,16 @@ const Header = () => {
               >
                 <span role="img" aria-label="empresas" style={{ marginRight: 8 }}>🏢</span>
                 Empresas Pendentes
+              </button>
+            </li>
+            <li>
+              <button
+              className={styles.dropdownItem}
+              onClick={handleUserProjection}
+              type='button'
+              >
+                <span role='img'  aria-label='users' style={{marginRight: 8}}>👥</span>
+                Projeção de Usuários
               </button>
             </li>
           </ul>
