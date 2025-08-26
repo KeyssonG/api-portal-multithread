@@ -32,32 +32,34 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <header className={styles.header}>
         <h1 className={styles.headerTitle}>Portal MultiThread</h1>
       </header>
 
-      {!needsPasswordChange ? (
-        <LoginForm
-          username={loginForm.formState.username}
-          password={loginForm.formState.password}
-          error={loginForm.apiState.error}
-          isLoading={loginForm.apiState.isLoading}
-          onUsernameChange={(e) => loginForm.formActions.setUsername(e.target.value)}
-          onPasswordChange={(e) => loginForm.formActions.setPassword(e.target.value)}
-          onSubmit={handleLoginSubmit}
-        />
-      ) : (
-        <PasswordChangeForm
-          newPassword={passwordForm.formState.newPassword}
-          confirmPassword={passwordForm.formState.confirmPassword}
-          error={passwordForm.apiState.error}
-          isLoading={passwordForm.apiState.isLoading}
-          onNewPasswordChange={(e) => passwordForm.formActions.setNewPassword(e.target.value)}
-          onConfirmPasswordChange={(e) => passwordForm.formActions.setConfirmPassword(e.target.value)}
-          onSubmit={passwordForm.handleSubmit}
-        />
-      )}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '70px' }}>
+        {!needsPasswordChange ? (
+          <LoginForm
+            username={loginForm.formState.username}
+            password={loginForm.formState.password}
+            error={loginForm.apiState.error}
+            isLoading={loginForm.apiState.isLoading}
+            onUsernameChange={(e) => loginForm.formActions.setUsername(e.target.value)}
+            onPasswordChange={(e) => loginForm.formActions.setPassword(e.target.value)}
+            onSubmit={handleLoginSubmit}
+          />
+        ) : (
+          <PasswordChangeForm
+            newPassword={passwordForm.formState.newPassword}
+            confirmPassword={passwordForm.formState.confirmPassword}
+            error={passwordForm.apiState.error}
+            isLoading={passwordForm.apiState.isLoading}
+            onNewPasswordChange={(e) => passwordForm.formActions.setNewPassword(e.target.value)}
+            onConfirmPasswordChange={(e) => passwordForm.formActions.setConfirmPassword(e.target.value)}
+            onSubmit={passwordForm.handleSubmit}
+          />
+        )}
+      </div>
 
       <Footer />
     </div>

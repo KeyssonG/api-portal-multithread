@@ -8,11 +8,11 @@ const CadastroFuncionario: React.FC = () => {
   const { formState, apiState, formActions, handleSubmit } = useCadastroFuncionarioForm();
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <header className={styles.header}>
         <h1>Portal MultiThread</h1>
       </header>
-      <div className={styles["register-box"]}>
+      <div className={styles["register-box"]} style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <div className={styles["login-header"]}>
           <header>Cadastrar funcionário</header>
         </div>

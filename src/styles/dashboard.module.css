@@ -1,6 +1,6 @@
 .dashboard {
-  padding: 80px 2rem 120px 2rem;
-  min-height: 100vh;
+  padding: 0 2rem 40px 2rem;
+  min-height: calc(100vh - 200px);
   background-color: #f9f9f9;
 }
 

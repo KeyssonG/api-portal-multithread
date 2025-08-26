@@ -79,9 +79,9 @@ const processarDadosGrafico = (data: StatusEmpresaData) => {
 };
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', paddingTop: '70px' }}>
       <Header />
-      <main className={styles.dashboard}>
+      <main className={styles.dashboard} style={{ flex: 1 }}>
         {/* Gráfico sempre visível na página principal */}
         {statusData && !empresaSelecionada && (
           <div className={styles.statusContainer}>

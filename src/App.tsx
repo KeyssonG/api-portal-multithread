@@ -11,7 +11,7 @@ const App = () => {
   return (
     <div className="app-container" style={{ display: 'flex' }}>
       <div style={{ flex: 1 }}>
-        <main style={{ padding: '20px' }}>
+        <main>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/cadastrar" element={<CadastroFuncionario />} />
