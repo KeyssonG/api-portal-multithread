@@ -13,11 +13,11 @@ const EmpresaCard = ({ empresa, onClick }: EmpresaCardProps) => {
       onClick={() => onClick(empresa)}
       style={{ cursor: 'pointer' }}
     >
-      <h3>{empresa.nome}</h3>
+      <h3>{empresa.name}</h3>
       <p><strong>CNPJ:</strong> {empresa.cnpj}</p>
-      <p><strong>Número da Conta:</strong> {empresa.numeroConta}</p>
+      <p><strong>Número da Conta:</strong> {empresa.accountNumber}</p>
       <p><strong>Status:</strong> {empresa.status === 1 ? 'Ativo' : 'Pendente'}</p>
-      <p><strong>Descrição:</strong> {empresa.descricao}</p>
+      <p><strong>Descrição:</strong> {empresa.description}</p>
     </div>
   );
 };
