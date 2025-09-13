@@ -14,7 +14,7 @@ export const fechEmpresaPendentes = async (): Promise<EmpresaPendente[]> => {
 
 export const updateEmpresaStatus = async (empresa: EmpresaPendente, newStatus: string): Promise<void> => {
     try {
-        await api.put(`/administracao/status/conta?numeroConta=${empresa.numeroConta}`, {
+        await api.put(`/administracao/status/conta?numeroConta=${empresa.accountNumber}`, {
             newStatus,
         });
     } catch (err: any) {
