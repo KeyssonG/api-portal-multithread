@@ -29,7 +29,6 @@ const CadastroFuncionario: React.FC = () => {
           onEmailChange={e => formActions.setEmail(e.target.value)}
           onCpfChange={formActions.setCpf}
           onUsernameChange={e => formActions.setUsername(e.target.value)}
-          onPasswordChange={e => formActions.setPassword(e.target.value)}
           onDepartamentoChange={e => formActions.setDepartamento(e.target.value)}
           onSubmit={handleSubmit}
         />
