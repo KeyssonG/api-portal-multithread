@@ -7,7 +7,6 @@ interface Props {
   email: string;
   cpf: string;
   username: string;
-  password: string;
   departamento: string;
   error: string;
   success: boolean;
@@ -16,7 +15,6 @@ interface Props {
   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onCpfChange: (value: string) => void;
   onUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDepartamentoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
 }
@@ -26,7 +24,6 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
   email,
   cpf,
   username,
-  password,
   departamento,
   error,
   success,
@@ -35,7 +32,6 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
   onEmailChange,
   onCpfChange,
   onUsernameChange,
-  onPasswordChange,
   onDepartamentoChange,
   onSubmit,
 }) => (
@@ -67,13 +63,6 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
       placeholder="Usuário"
       value={username}
       onChange={onUsernameChange}
-      required
-    />
-    <input
-      type="password"
-      placeholder="Senha"
-      value={password}
-      onChange={onPasswordChange}
       required
     />
     <input

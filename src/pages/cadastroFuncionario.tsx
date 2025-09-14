@@ -21,7 +21,6 @@ const CadastroFuncionario: React.FC = () => {
           email={formState.email}
           cpf={formState.cpf}
           username={formState.username}
-          password={formState.password}
           departamento={formState.departamento}
           error={apiState.error}
           success={apiState.success}
