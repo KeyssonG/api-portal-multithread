@@ -5,6 +5,7 @@ import { useLoginForm } from '../hooks/useLoginForm';
 import { usePasswordChangeForm } from '../hooks/usePasswordChangeForm';
 import { LoginForm } from '../components/LoginForm';
 import { PasswordChangeForm } from '../components/PasswordChangeForm';
+import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 const Login = () => {
@@ -47,7 +48,11 @@ const Login = () => {
             onUsernameChange={(e) => loginForm.formActions.setUsername(e.target.value)}
             onPasswordChange={(e) => loginForm.formActions.setPassword(e.target.value)}
             onSubmit={handleLoginSubmit}
-          />
+          >
+            <div style={{ marginTop: 12, textAlign: 'center' }}>
+              <Link to="/reset-senha/solicitar">Esqueceu a senha?</Link>
+            </div>
+          </LoginForm>
         ) : (
           <PasswordChangeForm
             newPassword={passwordForm.formState.newPassword}

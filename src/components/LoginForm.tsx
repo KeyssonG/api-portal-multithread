@@ -9,6 +9,7 @@ type LoginFormProps = {
   onUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
+  children?: React.ReactNode;
 };
 
 export const LoginForm = ({
@@ -18,7 +19,8 @@ export const LoginForm = ({
   isLoading,
   onUsernameChange,
   onPasswordChange,
-  onSubmit
+  onSubmit,
+  children
 }: LoginFormProps) => (
   <div className={styles.loginBox}>
     <div className={styles.loginHeader}>
@@ -61,6 +63,7 @@ export const LoginForm = ({
           {isLoading ? 'Carregando...' : 'Entrar'}
         </button>
       </div>
+  {children}
     </form>
   </div>
 );

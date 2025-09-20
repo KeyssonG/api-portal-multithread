@@ -21,5 +21,13 @@ export const authService = {
       headers: { Authorization: `Bearer ${token}` }
     });
     return response.data;
+  },
+
+  async solicitarResetSenha(email: string) {
+    return authApi.post('/reset-senha/solicitar', { email });
+  },
+
+  async confirmarResetSenha(token: string, newPassword: string) {
+    return authApi.post('/reset-senha/confirmar', { token, newPassword });
   }
 };

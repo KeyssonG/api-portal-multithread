@@ -1,5 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import  Login  from './pages/Login';
+import ResetSenhaSolicitar from './pages/ResetSenhaSolicitar';
+import ResetSenhaConfirmar from './pages/ResetSenhaConfirmar';
 import './styles/global.css';
 import Dashboard from './pages/Dashboard';
 import { DashboardProvider } from './contexts/DashboardContextType';
@@ -27,6 +29,8 @@ const App = () => {
                 <UserProjectionPage />
               </PrivateRoute>
             }></Route>
+            <Route path="/reset-senha/solicitar" element={<ResetSenhaSolicitar />} />
+            <Route path="/reset-senha/confirmar" element={<ResetSenhaConfirmar />} />
             <Route path='/' element={<Login />}></Route>
           </Routes>
         </main>
