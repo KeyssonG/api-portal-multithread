@@ -14,7 +14,6 @@ export function UserProjectionPage() {
 
     const { data, loading, error, refetch } = useUserProjection({
         dataInicio,
-        dataFim,
         periodos
     });
 
@@ -93,7 +92,7 @@ export function UserProjectionPage() {
                                 value={periodos}
                                 onChange={(e) => setPeriodos(Number(e.target.value))}
                                 style={{
-                                    padding: '1px 12px',
+                                    padding: '8px 12px',
                                     border: '1px solid #ddd',
                                     borderRadius: 4,
                                     fontSize: 14

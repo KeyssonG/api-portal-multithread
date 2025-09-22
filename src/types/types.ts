@@ -14,7 +14,7 @@ export interface StatusEmpresaData {
 }
 
 export interface UserData {
-    quantidadeUsers: number;
+    quantidadeUsuarios: number;
     dataCriacao: string;
 }
 

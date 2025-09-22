@@ -12,8 +12,24 @@ interface UserProjectionBarChartProps {
 
 export function UserProjectionBarChart({ data, title = "Projeção de Usuários por período" }: UserProjectionBarChartProps) {
     const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('pt-BR');
+        // Se a string está no formato DDMMYYYY (8 caracteres)
+        if (dateString && dateString.length === 8 && /^\d{8}$/.test(dateString)) {
+            const day = dateString.substring(0, 2);
+            const month = dateString.substring(2, 4);
+            const year = dateString.substring(4, 8);
+            return `${day}/${month}/${year}`;
+        }
+        
+        // Se for outro formato, tenta converter normalmente
+        try {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) {
+                return dateString; // Retorna a string original se não conseguir converter
+            }
+            return date.toLocaleDateString('pt-BR');
+        } catch {
+            return dateString; // Retorna a string original em caso de erro
+        }
     };
 
     const formatTooltip = (value: number) => {
