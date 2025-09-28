@@ -48,13 +48,11 @@ export const useLoginForm = () => {
       
       return { needsPasswordChange: false };
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro no login:', error);
-      setError(
-        error instanceof Error 
-          ? error.message 
-          : 'Não foi possível fazer o login. Verifique seus dados.'
-      );
+
+      const errorMessage = 'Erro ao fazer o login, revise os dados de usuário e senha';
+      setError(errorMessage);
       return { needsPasswordChange: false };
     } finally {
       setIsLoading(false);
