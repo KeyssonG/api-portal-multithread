@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getUserData } from "../services/UserService";
 import type { UserChartData } from "../types/types";
 
@@ -108,13 +108,6 @@ export function useUserProjection({
             setLoading(false);
         }
     };
-
-    useEffect(() => {
-        if (dataInicio) {
-            fetchUserData();
-        }
-    }, [dataInicio, periodos]);
-
     const refetch = () => {
         fetchUserData();
     };
