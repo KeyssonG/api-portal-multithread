@@ -20,6 +20,7 @@ const CadastroFuncionario: React.FC = () => {
           nome={formState.nome}
           email={formState.email}
           cpf={formState.cpf}
+          dataNascimento={formState.dataNascimento}
           username={formState.username}
           departamento={formState.departamento}
           error={apiState.error}
@@ -28,6 +29,7 @@ const CadastroFuncionario: React.FC = () => {
           onNomeChange={e => formActions.setNome(e.target.value)}
           onEmailChange={e => formActions.setEmail(e.target.value)}
           onCpfChange={formActions.setCpf}
+          onDataNascimentoChange={e => formActions.setDataNascimento(e.target.value)}
           onUsernameChange={e => formActions.setUsername(e.target.value)}
           onDepartamentoChange={e => formActions.setDepartamento(e.target.value)}
           onSubmit={handleSubmit}

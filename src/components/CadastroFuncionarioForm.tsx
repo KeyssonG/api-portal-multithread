@@ -6,6 +6,7 @@ interface Props {
   nome: string;
   email: string;
   cpf: string;
+  dataNascimento: string;
   username: string;
   departamento: string;
   error: string;
@@ -14,6 +15,7 @@ interface Props {
   onNomeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onCpfChange: (value: string) => void;
+  onDataNascimentoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDepartamentoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
@@ -23,6 +25,7 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
   nome,
   email,
   cpf,
+  dataNascimento,
   username,
   departamento,
   error,
@@ -31,6 +34,7 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
   onNomeChange,
   onEmailChange,
   onCpfChange,
+  onDataNascimentoChange,
   onUsernameChange,
   onDepartamentoChange,
   onSubmit,
@@ -63,6 +67,13 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
       placeholder="Usuário"
       value={username}
       onChange={onUsernameChange}
+      required
+    />
+    <input
+      type="date"
+      placeholder="Data de nascimento"
+      value={dataNascimento}
+      onChange={onDataNascimentoChange}
       required
     />
     <input
