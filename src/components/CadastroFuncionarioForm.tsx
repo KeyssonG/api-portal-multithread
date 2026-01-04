@@ -7,6 +7,7 @@ interface Props {
   email: string;
   cpf: string;
   dataNascimento: string;
+  telefone: string;
   username: string;
   departamento: string;
   error: string;
@@ -16,6 +17,7 @@ interface Props {
   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onCpfChange: (value: string) => void;
   onDataNascimentoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onTelefoneChange: (value: string) => void;
   onUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDepartamentoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
@@ -26,6 +28,7 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
   email,
   cpf,
   dataNascimento,
+  telefone,
   username,
   departamento,
   error,
@@ -35,6 +38,7 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
   onEmailChange,
   onCpfChange,
   onDataNascimentoChange,
+  onTelefoneChange,
   onUsernameChange,
   onDepartamentoChange,
   onSubmit,
@@ -74,6 +78,14 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
       placeholder="Data de nascimento"
       value={dataNascimento}
       onChange={onDataNascimentoChange}
+      required
+    />
+    <IMaskInput
+      mask={[{ mask: '(00) 0000-0000' }, { mask: '(00) 00000-0000' }]}
+      value={telefone}
+      onAccept={onTelefoneChange}
+      className={styles.inputField}
+      placeholder="Telefone"
       required
     />
     <input

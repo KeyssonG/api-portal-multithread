@@ -6,6 +6,7 @@ export interface CadastroFuncionarioFormState {
   email: string;
   cpf: string;
   dataNascimento: string;
+  telefone: string;
   username: string;
   password: string;
   departamento: string;
@@ -17,6 +18,7 @@ export function useCadastroFuncionarioForm() {
     email: '',
     cpf: '',
     dataNascimento: '',
+    telefone: '',
     username: '',
     password: '',
     departamento: '',
@@ -32,10 +34,11 @@ export function useCadastroFuncionarioForm() {
     setEmail: (email: string) => setFormState((s) => ({ ...s, email })),
     setCpf: (cpf: string) => setFormState((s) => ({ ...s, cpf })),
     setDataNascimento: (dataNascimento: string) => setFormState((s) => ({ ...s, dataNascimento })),
+    setTelefone: (telefone: string) => setFormState((s) => ({ ...s, telefone })),
     setUsername: (username: string) => setFormState((s) => ({ ...s, username })),
     setPassword: (password: string) => setFormState((s) => ({ ...s, password })),
     setDepartamento: (departamento: string) => setFormState((s) => ({ ...s, departamento })),
-    reset: () => setFormState({ nome: '', email: '', cpf: '', dataNascimento: '', username: '', password: '', departamento: '' }),
+    reset: () => setFormState({ nome: '', email: '', cpf: '', dataNascimento: '', telefone: '', username: '', password: '', departamento: '' }),
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
