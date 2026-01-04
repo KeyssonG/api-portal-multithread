@@ -6,6 +6,7 @@ interface Props {
   nome: string;
   email: string;
   cpf: string;
+  sexo: string;
   dataNascimento: string;
   telefone: string;
   username: string;
@@ -16,6 +17,7 @@ interface Props {
   onNomeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onCpfChange: (value: string) => void;
+  onSexoChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onDataNascimentoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onTelefoneChange: (value: string) => void;
   onUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -27,6 +29,7 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
   nome,
   email,
   cpf,
+  sexo,
   dataNascimento,
   telefone,
   username,
@@ -37,6 +40,7 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
   onNomeChange,
   onEmailChange,
   onCpfChange,
+  onSexoChange,
   onDataNascimentoChange,
   onTelefoneChange,
   onUsernameChange,
@@ -66,6 +70,17 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
       placeholder="CPF"
       required
     />
+    <select
+      value={sexo}
+      onChange={onSexoChange}
+      className={styles.inputField}
+      required
+    >
+      <option value="">Selecione o sexo</option>
+      <option value="M">Masculino</option>
+      <option value="F">Feminino</option>
+      <option value="O">Outro</option>
+    </select>
     <input
       type="text"
       placeholder="Usuário"

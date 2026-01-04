@@ -5,6 +5,7 @@ export interface CadastroFuncionarioFormState {
   nome: string;
   email: string;
   cpf: string;
+  sexo: string;
   dataNascimento: string;
   telefone: string;
   username: string;
@@ -17,6 +18,7 @@ export function useCadastroFuncionarioForm() {
     nome: '',
     email: '',
     cpf: '',
+    sexo: '',
     dataNascimento: '',
     telefone: '',
     username: '',
@@ -33,12 +35,13 @@ export function useCadastroFuncionarioForm() {
     setNome: (nome: string) => setFormState((s) => ({ ...s, nome })),
     setEmail: (email: string) => setFormState((s) => ({ ...s, email })),
     setCpf: (cpf: string) => setFormState((s) => ({ ...s, cpf })),
+    setSexo: (sexo: string) => setFormState((s) => ({ ...s, sexo })),
     setDataNascimento: (dataNascimento: string) => setFormState((s) => ({ ...s, dataNascimento })),
     setTelefone: (telefone: string) => setFormState((s) => ({ ...s, telefone })),
     setUsername: (username: string) => setFormState((s) => ({ ...s, username })),
     setPassword: (password: string) => setFormState((s) => ({ ...s, password })),
     setDepartamento: (departamento: string) => setFormState((s) => ({ ...s, departamento })),
-    reset: () => setFormState({ nome: '', email: '', cpf: '', dataNascimento: '', telefone: '', username: '', password: '', departamento: '' }),
+    reset: () => setFormState({ nome: '', email: '', cpf: '', sexo: '', dataNascimento: '', telefone: '', username: '', password: '', departamento: '' }),
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
