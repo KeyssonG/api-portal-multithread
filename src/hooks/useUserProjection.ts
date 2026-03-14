@@ -11,6 +11,7 @@ interface UseUserProjectionProps {
 
 export function useUserProjection({
     dataInicio,
+    dataFim,
     periodos = 7
 }: UseUserProjectionProps = {}) {
     const [data, setData] = useState<UserChartData[]>([]);
@@ -77,31 +78,52 @@ export function useUserProjection({
         setError(null);
 
         try {
-            if (!dataInicio) {
-                setError('Data início é obrigatória');
-                return;
-            }
+            // Se dataInicio for fornecida, usa a lógica de range de datas
+            if (dataInicio) {
+                const startDate = parseDateString(dataInicio);
+                const dateRange = generateDateRange(startDate, periodos);
 
-            const startDate = parseDateString(dataInicio);
-            const dateRange = generateDateRange(startDate, periodos);
+                const userDataPromises = dateRange.map(async (date) => {
+                    try {
+                        const result = await getUserData(date, date);
+                        return {
+                            data: date,
+                            quantidade: result.quantidadeUsuarios
+                        };
+                    } catch (err: any) {
+                        return {
+                            data: date,
+                            quantidade: 0
+                        };
+                    }
+                });
 
-            const userDataPromises = dateRange.map(async (date) => {
-                try {
-                    const result = await getUserData(date, date);
-                    return {
-                        data: date,
-                        quantidade: result.quantidadeUsuarios
-                    };
-                } catch (err: any) {
-                    return {
-                        data: date,
-                        quantidade: 0
-                    };
+                const results = await Promise.all(userDataPromises);
+                setData(results);
+            } else {
+                // Se dataInicio não for fornecida, chama o back-end sem datas
+                // O back-end vai tratar as datas caso não sejam fornecidas
+                let dataFimFormatada: string | undefined = undefined;
+                let dataLabel: string = 'Total';
+                
+                if (dataFim) {
+                    const endDate = parseDateString(dataFim);
+                    dataFimFormatada = formatDate(endDate);
+                    // Usa dataFim original (formato YYYY-MM-DD) como label, que é mais legível
+                    dataLabel = dataFim;
                 }
-            });
 
-            const results = await Promise.all(userDataPromises);
-            setData(results);
+                try {
+                    const result = await getUserData(undefined, dataFimFormatada);
+                    // Retorna um array com um único item para manter a compatibilidade com o gráfico
+                    setData([{
+                        data: dataLabel,
+                        quantidade: result.quantidadeUsuarios
+                    }]);
+                } catch (err: any) {
+                    setError(err.message);
+                }
+            }
         } catch (err: any) {
             setError(err.message);
         } finally {

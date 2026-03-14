@@ -14,6 +14,7 @@ export function UserProjectionPage() {
 
     const { data, loading, error, refetch } = useUserProjection({
         dataInicio,
+        dataFim,
         periodos
     });
 
