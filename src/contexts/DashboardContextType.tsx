@@ -6,6 +6,8 @@ interface DashboardContextType {
     setEmpresaSelecionada: (empresa: EmpresaPendente | null) => void;
     showEmpresasPendentes: boolean;
     setShowEmpresasPendentes: (value: boolean) => void;
+    showModulos: boolean;
+    setShowModulos: (value: boolean) => void;
 }
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
@@ -13,6 +15,7 @@ const DashboardContext = createContext<DashboardContextType | undefined>(undefin
 export const DashboardProvider = ({ children }: { children: React.ReactNode }) => {
   const [empresaSelecionada, setEmpresaSelecionada] = useState<EmpresaPendente | null>(null);
   const [showEmpresasPendentes, setShowEmpresasPendentes] = useState(false);
+  const [showModulos, setShowModulos] = useState(false);
 
   return (
     <DashboardContext.Provider
@@ -21,6 +24,8 @@ export const DashboardProvider = ({ children }: { children: React.ReactNode }) =
         setEmpresaSelecionada,
         showEmpresasPendentes,
         setShowEmpresasPendentes,
+        showModulos,
+        setShowModulos,
       }}
     >
       {children}
