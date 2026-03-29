@@ -140,7 +140,7 @@ const Header = () => {
             onClick={handleVerModulos} 
             className={getNavTextClass('/modulos')}
           >
-            <span>Módulos</span>
+            <span>Gestão de Módulos</span>
             <span className={getNavUnderlineClass('/modulos')}></span>
           </NavbarLink>
         </div>

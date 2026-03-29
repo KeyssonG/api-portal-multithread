@@ -22,3 +22,13 @@ export interface CompanyResponseDTO {
     id: number;
     name: string;
 }
+
+export interface CompanyModuloResponse {
+    id: number;
+    companyId: number;
+    companyName: string;
+    moduloId: number;
+    moduloName: string;
+    status: number;
+    statusDescription: string;
+}
