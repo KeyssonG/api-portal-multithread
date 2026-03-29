@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../styles/dashboard.module.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -12,21 +12,24 @@ const Consultas = () => {
   const [error, setError] = useState<string | null>(null);
   const [empresaSelecionada, setEmpresaSelecionada] = useState<EmpresaPendente | null>(null);
 
-  const handleConsultar = async () => {
-    setLoading(true);
-    setError(null);
-    setEmpresaSelecionada(null);
-    try {
-      const data = await fechEmpresaPendentes();
-      setEmpresas(data);
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Erro ao carregar dados';
-      setError(errorMessage);
-      setEmpresas([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      setEmpresaSelecionada(null);
+      try {
+        const data = await fechEmpresaPendentes();
+        setEmpresas(data);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Erro ao carregar dados';
+        setError(errorMessage);
+        setEmpresas([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleCardClick = (empresa: EmpresaPendente) => {
     setEmpresaSelecionada(empresa);
@@ -63,34 +66,12 @@ const Consultas = () => {
                   Gerencie as empresas que aguardam análise de cadastro:
                 </p>
               </div>
-              
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <button
-                  onClick={handleConsultar}
-                  style={{
-                    padding: '12px 24px',
-                    borderRadius: '8px',
-                    border: 'none',
-                    backgroundColor: '#1976d2',
-                    color: 'white',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                    transition: 'background-color 0.2s'
-                  }}
-                  onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#1565c0')}
-                  onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#1976d2')}
-                >
-                  Consultar
-                </button>
-              </div>
             </div>
 
             {loading && <p className={styles.loading}>Buscando empresas...</p>}
             {error && <p className={styles.error}>{error}</p>}
             {!loading && !error && empresas.length === 0 && (
-              <p className={styles.empty}>Clique em "Consultar" para listar as empresas pendentes.</p>
+              <p className={styles.empty}>Nenhuma empresa pendente no momento.</p>
             )}
 
             <div className={styles.cards}>

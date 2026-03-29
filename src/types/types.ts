@@ -17,3 +17,8 @@ export interface Modulo {
     id: number;
     nome: string;
 }
+
+export interface CompanyResponseDTO {
+    id: number;
+    name: string;
+}

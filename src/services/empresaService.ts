@@ -1,6 +1,19 @@
 import axios from "axios";
-import type { EmpresaPendente, StatusEmpresaData } from "../types/types";
+import type { CompanyResponseDTO, EmpresaPendente, StatusEmpresaData } from "../types/types";
 import api from "./apiService";
+
+export const getCompaniesByStatus = async (statusId: number): Promise<CompanyResponseDTO[]> => {
+    try {
+        const response = await api.get<CompanyResponseDTO[]>(`/administracao/empresa/status/${statusId}`);
+        return response.data;
+    } catch (err) {
+        let errorMessage = 'Erro ao buscar empresas por status';
+        if (axios.isAxiosError(err)) {
+            errorMessage = err.response?.data?.message || errorMessage;
+        }
+        throw new Error(errorMessage);
+    }
+};
 
 export const fechEmpresaPendentes = async (): Promise<EmpresaPendente[]> => {
     try {
@@ -41,3 +54,19 @@ export const getStatusEmpresas = async (): Promise<StatusEmpresaData> => {
         throw new Error(errorMessage);
     }
 }
+
+export const linkCompanyModulo = async (companyId: number, moduloId: number, status: number): Promise<void> => {
+    try {
+        await api.post('/administracao/empresa/modulo', {
+            companyId,
+            moduloId,
+            status
+        });
+    } catch (err) {
+        let errorMessage = 'Erro ao vincular empresa ao módulo';
+        if (axios.isAxiosError(err)) {
+            errorMessage = err.response?.data?.message || errorMessage;
+        }
+        throw new Error(errorMessage);
+    }
+};
