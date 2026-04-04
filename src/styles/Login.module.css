@@ -141,16 +141,7 @@ section a {
     height: 50px;
   }
 
-  footer {
-    padding: 15px 0;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    box-shadow: 0 -3px 7px rgba(0, 0, 0, 0.15);
-  }
-
-  footer p {
-    font-size: 14px;
-  }
+  /* Footer styles removed - using Footer.module.css instead */
 }
 .container {
   display: flex;

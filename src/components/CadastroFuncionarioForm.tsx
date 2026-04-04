@@ -6,16 +6,21 @@ interface Props {
   nome: string;
   email: string;
   cpf: string;
+  sexo: string;
+  dataNascimento: string;
+  telefone: string;
   username: string;
-  password: string;
   departamento: string;
   error: string;
+  success: boolean;
   isLoading: boolean;
   onNomeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onCpfChange: (value: string) => void;
+  onSexoChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onDataNascimentoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onTelefoneChange: (value: string) => void;
   onUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onDepartamentoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
 }
@@ -24,21 +29,25 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
   nome,
   email,
   cpf,
+  sexo,
+  dataNascimento,
+  telefone,
   username,
-  password,
   departamento,
   error,
+  success,
   isLoading,
   onNomeChange,
   onEmailChange,
   onCpfChange,
+  onSexoChange,
+  onDataNascimentoChange,
+  onTelefoneChange,
   onUsernameChange,
-  onPasswordChange,
   onDepartamentoChange,
   onSubmit,
 }) => (
   <form className={styles.form} onSubmit={onSubmit}>
-    <h2>Cadastro de Funcionário</h2>
     <input
       type="text"
       placeholder="Nome"
@@ -61,6 +70,17 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
       placeholder="CPF"
       required
     />
+    <select
+      value={sexo}
+      onChange={onSexoChange}
+      className={styles.inputField}
+      required
+    >
+      <option value="">Selecione o sexo</option>
+      <option value="M">Masculino</option>
+      <option value="F">Feminino</option>
+      <option value="O">Outro</option>
+    </select>
     <input
       type="text"
       placeholder="Usuário"
@@ -69,10 +89,18 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
       required
     />
     <input
-      type="password"
-      placeholder="Senha"
-      value={password}
-      onChange={onPasswordChange}
+      type="date"
+      placeholder="Data de nascimento"
+      value={dataNascimento}
+      onChange={onDataNascimentoChange}
+      required
+    />
+    <IMaskInput
+      mask={[{ mask: '(00) 0000-0000' }, { mask: '(00) 00000-0000' }]}
+      value={telefone}
+      onAccept={onTelefoneChange}
+      className={styles.inputField}
+      placeholder="Telefone"
       required
     />
     <input
@@ -83,6 +111,7 @@ export const CadastroFuncionarioForm: React.FC<Props> = ({
       required
     />
     {error && <div className={styles.error}>{error}</div>}
+    {success && <div className={styles.success}>Funcionário cadastrado com sucesso!</div>}
     <button type="submit" disabled={isLoading}>
       {isLoading ? 'Cadastrando...' : 'Cadastrar'}
     </button>

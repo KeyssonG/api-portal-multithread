@@ -51,6 +51,11 @@ const Header = () => {
     navigate('/modulos');
   };
 
+  const handleUserProjection = () => {
+    setShowDropdown(false);
+    navigate('/user-projection')
+  }
+
   const handleLogoClick = () => {
     setEmpresaSelecionada(null);
     setShowEmpresasPendentes(false);

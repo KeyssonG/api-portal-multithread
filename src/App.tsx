@@ -1,6 +1,7 @@
-
 import { Routes, Route } from 'react-router-dom';
 import  Login  from './pages/Login';
+import ResetSenhaSolicitar from './pages/ResetSenhaSolicitar';
+import ResetSenhaConfirmar from './pages/ResetSenhaConfirmar';
 import './styles/global.css';
 import Dashboard from './pages/Dashboard';
 import Modulos from './pages/Modulos';
@@ -8,12 +9,13 @@ import Consultas from './pages/Consultas';
 import { DashboardProvider } from './contexts/DashboardContextType';
 import CadastroFuncionario from './pages/cadastroFuncionario';
 import { PrivateRoute } from './components/PrivateRoute';
+import { UserProjectionPage } from './components/UserProjectionPage'; // Adicione esta linha
 
 const App = () => {
   return (
     <div className="app-container" style={{ display: 'flex' }}>
       <div style={{ flex: 1 }}>
-        <main style={{ padding: '20px' }}>
+        <main>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/cadastrar" element={<CadastroFuncionario />} />

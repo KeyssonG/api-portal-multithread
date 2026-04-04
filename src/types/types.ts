@@ -2,9 +2,9 @@ export interface EmpresaPendente {
     id: number;
     cnpj: string;
     status: number;
-    descricao: string;
-    nome: string;
-    numeroConta: number;
+    description: string;
+    name: string;
+    accountNumber: number;
 }
 
 export interface StatusEmpresaData {

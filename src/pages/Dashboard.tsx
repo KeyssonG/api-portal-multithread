@@ -36,7 +36,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', paddingTop: '70px' }}>
       <Header />
       <main className={styles.dashboard}>
         <h2 className={styles.title}>Painel de Controle</h2>

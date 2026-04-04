@@ -146,34 +146,100 @@ section a {
   font-weight: 600;
 }
 
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #222;
-  color: #fff;
-  text-align: center;
-  padding: 20px 0 10px 0;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
+/* Footer styles removed - using Footer.module.css instead */
+
+/* Classes para o formulário de cadastro de funcionário */
+.form {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 15px;
+  width: 100%;
 }
 
-footer p,
-footer .reserved {
-  font-size: 16px;
-  margin: 0;
+.form h2 {
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 
-footer .reserved {
+.form input,
+.form button {
+  width: 100%;
+  height: 60px;
+  font-size: 17px;
+  padding: 0 25px;
+  border-radius: 30px;
+  border: none;
+  box-shadow: 0 5px 10px 1px rgba(0, 0, 0, 0.05);
+  outline: none;
+  transition: 0.3s;
+  box-sizing: border-box;
+}
+
+.form input:focus {
+  width: 105%;
+  box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.1);
+}
+
+.form button {
+  background: #222;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.form button:hover {
+  background: #000;
+  transform: scale(1.05, 1);
+}
+
+.form button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.inputField {
+  width: 100%;
+  height: 60px;
+  font-size: 17px;
+  padding: 0 25px;
+  border-radius: 30px;
+  border: none;
+  box-shadow: 0 5px 10px 1px rgba(0, 0, 0, 0.05);
+  outline: none;
+  transition: 0.3s;
+  box-sizing: border-box;
+}
+
+.inputField:focus {
+  width: 105%;
+  box-shadow: 0 5px 15px 1px rgba(0, 0, 0, 0.1);
+}
+
+.error {
+  color: #d32f2f;
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 10px 0;
   font-size: 14px;
-  color: #bbb;
-  font-weight: 400;
+  text-align: center;
+}
+
+.success {
+  color: #2e7d32;
+  background-color: #e8f5e8;
+  border: 1px solid #c8e6c9;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-size: 14px;
+  text-align: center;
 }
 
 @media (max-width: 600px) {

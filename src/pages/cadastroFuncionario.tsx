@@ -8,11 +8,11 @@ const CadastroFuncionario: React.FC = () => {
   const { formState, apiState, formActions, handleSubmit } = useCadastroFuncionarioForm();
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <header className={styles.header}>
         <h1>Portal MultiThread</h1>
       </header>
-      <div className={styles["register-box"]}>
+      <div className={styles["register-box"]} style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <div className={styles["login-header"]}>
           <header>Cadastrar funcionário</header>
         </div>
@@ -20,16 +20,21 @@ const CadastroFuncionario: React.FC = () => {
           nome={formState.nome}
           email={formState.email}
           cpf={formState.cpf}
+          sexo={formState.sexo}
+          dataNascimento={formState.dataNascimento}
+          telefone={formState.telefone}
           username={formState.username}
-          password={formState.password}
           departamento={formState.departamento}
           error={apiState.error}
+          success={apiState.success}
           isLoading={apiState.isLoading}
           onNomeChange={e => formActions.setNome(e.target.value)}
           onEmailChange={e => formActions.setEmail(e.target.value)}
           onCpfChange={formActions.setCpf}
+          onSexoChange={e => formActions.setSexo(e.target.value)}
+          onDataNascimentoChange={e => formActions.setDataNascimento(e.target.value)}
+          onTelefoneChange={formActions.setTelefone}
           onUsernameChange={e => formActions.setUsername(e.target.value)}
-          onPasswordChange={e => formActions.setPassword(e.target.value)}
           onDepartamentoChange={e => formActions.setDepartamento(e.target.value)}
           onSubmit={handleSubmit}
         />
