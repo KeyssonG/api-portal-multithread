@@ -12,3 +12,23 @@ export interface StatusEmpresaData {
     ativo: number;
     rejeitado: number;
 }
+
+export interface Modulo {
+    id: number;
+    nome: string;
+}
+
+export interface CompanyResponseDTO {
+    id: number;
+    name: string;
+}
+
+export interface CompanyModuloResponse {
+    id: number;
+    companyId: number;
+    companyName: string;
+    moduloId: number;
+    moduloName: string;
+    status: number;
+    statusDescription: string;
+}
