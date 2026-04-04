@@ -10,7 +10,6 @@ const Modulos = () => {
   // UI Control
   const [activeTab, setActiveTab] = useState<'consultar' | 'vincular'>('consultar');
   const [loading, setLoading] = useState(false);
-  const [loadingCompanies, setLoadingCompanies] = useState(false);
   const [linking, setLinking] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -68,14 +67,11 @@ const Modulos = () => {
     setIsModalOpen(true);
     setSuccessMessage(null);
     if (companies.length === 0) {
-      setLoadingCompanies(true);
       try {
         const data = await getCompaniesByStatus(2);
         setCompanies(data);
       } catch (err) {
         console.error(err);
-      } finally {
-        setLoadingCompanies(false);
       }
     }
   };

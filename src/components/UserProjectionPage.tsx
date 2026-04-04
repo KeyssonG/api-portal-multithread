@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useUserProjection } from "../hooks/useUserProjection";
 import { UserProjectionBarChart } from "./UserProjectionBarChart";
 import { useNavigate } from "react-router";
+import Header from "./Header";
 
 
 export function UserProjectionPage() {

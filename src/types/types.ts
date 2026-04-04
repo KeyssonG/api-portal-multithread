@@ -32,3 +32,16 @@ export interface CompanyModuloResponse {
     status: number;
     statusDescription: string;
 }
+
+export interface UserChartData {
+    data: string;
+    quantidade: number;
+}
+
+export interface UserData {
+    quantidadeUsuarios: number;
+}
+
+export interface UserError {
+    message: string;
+}
