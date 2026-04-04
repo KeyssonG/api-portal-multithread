@@ -86,10 +86,10 @@ const Consultas = () => {
           </>
         ) : (
           <div className={styles.cardExpanded}>
-            <h2>{empresaSelecionada.nome}</h2>
+            <h2>{empresaSelecionada.name}</h2>
             <p><strong>CNPJ:</strong> {empresaSelecionada.cnpj}</p>
-            <p><strong>Número da Conta:</strong> {empresaSelecionada.numeroConta}</p>
-            <p><strong>Descrição:</strong> {empresaSelecionada.descricao}</p>
+            <p><strong>Número da Conta:</strong> {empresaSelecionada.accountNumber}</p>
+            <p><strong>Descrição:</strong> {empresaSelecionada.description}</p>
             <div className={styles.cardActions}>
               <button className={styles.approveButton} onClick={() => handleAtualizarStatus("2")}>
                 ✅ Aprovar
