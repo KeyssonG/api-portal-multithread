@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useUserProjection } from "../hooks/useUserProjection";
 import { UserProjectionBarChart } from "./UserProjectionBarChart";
 import { useNavigate } from "react-router";
@@ -26,7 +26,7 @@ export function UserProjectionPage() {
 
     return (
         <div>
-            <header />
+            <Header />
             <div style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>
                 <button
                 onClick={() => navigate('/dashboard')}
