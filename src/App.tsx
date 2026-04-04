@@ -4,6 +4,8 @@ import ResetSenhaSolicitar from './pages/ResetSenhaSolicitar';
 import ResetSenhaConfirmar from './pages/ResetSenhaConfirmar';
 import './styles/global.css';
 import Dashboard from './pages/Dashboard';
+import Modulos from './pages/Modulos';
+import Consultas from './pages/Consultas';
 import { DashboardProvider } from './contexts/DashboardContextType';
 import CadastroFuncionario from './pages/cadastroFuncionario';
 import { PrivateRoute } from './components/PrivateRoute';
@@ -24,13 +26,20 @@ const App = () => {
                 </DashboardProvider>
               </PrivateRoute>
             }></Route>
-            <Route path='/user-projection' element={
+            <Route path='/modulos' element={
               <PrivateRoute>
-                <UserProjectionPage />
+                <DashboardProvider>
+                  <Modulos />
+                </DashboardProvider>
               </PrivateRoute>
             }></Route>
-            <Route path="/reset-senha/solicitar" element={<ResetSenhaSolicitar />} />
-            <Route path="/reset-senha/confirmar" element={<ResetSenhaConfirmar />} />
+            <Route path='/consultas' element={
+              <PrivateRoute>
+                <DashboardProvider>
+                  <Consultas />
+                </DashboardProvider>
+              </PrivateRoute>
+            }></Route>
             <Route path='/' element={<Login />}></Route>
           </Routes>
         </main>

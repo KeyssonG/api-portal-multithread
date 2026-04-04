@@ -13,18 +13,22 @@ export interface StatusEmpresaData {
     rejeitado: number;
 }
 
-export interface UserData {
-    quantidadeUsuarios: number;
-    dataCriacao: string;
+export interface Modulo {
+    id: number;
+    nome: string;
 }
 
-export interface UserError {
+export interface CompanyResponseDTO {
+    id: number;
+    name: string;
+}
+
+export interface CompanyModuloResponse {
+    id: number;
+    companyId: number;
+    companyName: string;
+    moduloId: number;
+    moduloName: string;
     status: number;
-    message: string;
-    timestamp: string;
-}
-
-export interface UserChartData {
-    data: string;
-    quantidade: number;
+    statusDescription: string;
 }
