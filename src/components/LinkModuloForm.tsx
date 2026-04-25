@@ -30,6 +30,7 @@ const LinkModuloForm: React.FC<LinkModuloFormProps> = ({ onSuccess, onError }) =
   // UI State
   const [loadingDados, setLoadingDados] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
+  const [popupMessage, setPopupMessage] = useState<{title: string; message: string; type: 'error' | 'success' | 'info'} | null>(null);
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
   const [isEmployeeModalOpen, setIsEmployeeModalOpen] = useState(false);
   const [searchCompany, setSearchCompany] = useState('');
@@ -106,6 +107,7 @@ const LinkModuloForm: React.FC<LinkModuloFormProps> = ({ onSuccess, onError }) =
   const buscarFuncionarios = async () => {
     if (!token || !selectedCompany) return;
     setLoadingDados(true);
+    setFuncionarios([]);
     try {
       let data = [];
       const finalDataInicio = dataInicio || '2000-01-01';
@@ -117,12 +119,16 @@ const LinkModuloForm: React.FC<LinkModuloFormProps> = ({ onSuccess, onError }) =
         data = await funcionarioService.buscarFuncionariosPorEmpresaEDepartamento(selectedCompany.id, departamentoSelecionado, finalDataInicio, finalDataFim, token);
       }
       setFuncionarios(data || []);
-      if (data && data.length === 0) {
-        alert('Nenhum funcionário encontrado para os filtros informados.');
+      if (!data || data.length === 0) {
+        setPopupMessage({ title: 'Nenhum Dado Encontrado', message: 'A consulta não retornou funcionários para os filtros informados.', type: 'info' });
       }
     } catch (error: any) {
       console.error('Erro ao buscar funcionários:', error);
-      alert(error.message || 'Erro ao buscar funcionários.');
+      if (error.response?.status === 404) {
+        setPopupMessage({ title: 'Nenhum Dado Encontrado', message: 'A consulta não retornou funcionários para os filtros informados.', type: 'info' });
+      } else {
+        setPopupMessage({ title: 'Erro na Busca', message: error.message || 'Erro ao buscar funcionários.', type: 'error' });
+      }
     } finally {
       setLoadingDados(false);
     }
@@ -139,7 +145,7 @@ const LinkModuloForm: React.FC<LinkModuloFormProps> = ({ onSuccess, onError }) =
         companyId: selectedCompany.id
       }, token);
 
-      alert('Módulo vinculado com sucesso ao funcionário!');
+      setPopupMessage({ title: 'Sucesso!', message: 'Módulo vinculado com sucesso ao funcionário!', type: 'success' });
       setSelectedFuncionario(null);
       setSelectedModulo(null);
       if (activeTab === 'consultar') loadUserLinks();
@@ -148,7 +154,7 @@ const LinkModuloForm: React.FC<LinkModuloFormProps> = ({ onSuccess, onError }) =
       console.error('Erro ao vincular:', error);
       const msg = error.response?.data?.message || 'Erro inesperado ao vincular módulo.';
       onError?.(msg);
-      alert(msg);
+      setPopupMessage({ title: 'Erro ao Vincular', message: msg, type: 'error' });
     } finally {
       setLoadingSubmit(false);
     }
@@ -490,6 +496,33 @@ const LinkModuloForm: React.FC<LinkModuloFormProps> = ({ onSuccess, onError }) =
               </table>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Global Popup */}
+      {popupMessage && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 4000, padding: '20px', backdropFilter: 'blur(3px)' }}>
+          <div style={{ backgroundColor: 'white', padding: '2.5rem', borderRadius: '16px', maxWidth: '400px', width: '100%', textAlign: 'center', boxShadow: '0 10px 40px rgba(0,0,0,0.2)', animation: 'fadeIn 0.3s ease-out' }}>
+            <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>
+              {popupMessage.type === 'error' ? '❌' : popupMessage.type === 'success' ? '✅' : 'ℹ️'}
+            </div>
+            <h3 style={{ margin: '0 0 1rem 0', color: '#1a237e', fontSize: '1.4rem', fontWeight: '800' }}>{popupMessage.title}</h3>
+            <p style={{ color: '#666', marginBottom: '2rem', lineHeight: '1.5', fontSize: '1rem' }}>{popupMessage.message}</p>
+            <button 
+              onClick={() => setPopupMessage(null)}
+              style={{ width: '100%', padding: '12px', backgroundColor: '#1a237e', color: 'white', border: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '1.1rem', cursor: 'pointer', transition: 'background-color 0.2s' }}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#12185b'}
+              onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#1a237e'}
+            >
+              Entendi
+            </button>
+          </div>
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes fadeIn {
+              from { opacity: 0; transform: scale(0.95); }
+              to { opacity: 1; transform: scale(1); }
+            }
+          `}} />
         </div>
       )}
 
