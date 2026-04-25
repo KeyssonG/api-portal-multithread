@@ -45,3 +45,8 @@ export interface UserData {
 export interface UserError {
     message: string;
 }
+
+export interface DepartmentData {
+    idDepartamento?: number;
+    nomeDepartamento: string;
+}

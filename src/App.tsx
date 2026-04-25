@@ -4,6 +4,7 @@ import './styles/global.css';
 import Dashboard from './pages/Dashboard';
 import Modulos from './pages/Modulos';
 import Consultas from './pages/Consultas';
+import GestaoAcesso from './pages/GestaoAcesso';
 import { DashboardProvider } from './contexts/DashboardContextType';
 import CadastroFuncionario from './pages/cadastroFuncionario';
 import { PrivateRoute } from './components/PrivateRoute';
@@ -31,7 +32,15 @@ const App = () => {
                 </DashboardProvider>
               </PrivateRoute>
             }></Route>
+            <Route path='/gestao-acesso' element={
+              <PrivateRoute>
+                <DashboardProvider>
+                  <GestaoAcesso />
+                </DashboardProvider>
+              </PrivateRoute>
+            }></Route>
             <Route path='/consultas' element={
+
               <PrivateRoute>
                 <DashboardProvider>
                   <Consultas />

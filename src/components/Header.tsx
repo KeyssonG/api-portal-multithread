@@ -143,6 +143,13 @@ const Header = () => {
             <span>Gestão de Módulos</span>
             <span className={getNavUnderlineClass('/modulos')}></span>
           </NavbarLink>
+          <NavbarLink 
+            onClick={() => { setShowModulos(false); setShowEmpresasPendentes(false); navigate('/gestao-acesso'); }} 
+            className={getNavTextClass('/gestao-acesso')}
+          >
+            <span>Gestão de Acesso</span>
+            <span className={getNavUnderlineClass('/gestao-acesso')}></span>
+          </NavbarLink>
         </div>
       </NavbarCollapse>
     </Navbar>
