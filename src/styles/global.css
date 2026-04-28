@@ -8,15 +8,12 @@
 }
 
 html, body {
-    height: 100%;
     margin: 0;
 }
 
 body {
-    min-height: 100vh;
     background: #dfdfdf;
 }
 
 #root {
-    min-height: 100vh;
 }

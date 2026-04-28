@@ -54,9 +54,9 @@ const Consultas = () => {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f9f9f9' }}>
       <Header />
-      <main className={styles.dashboard}>
+      <main className={styles.dashboard} style={{ flex: 1 }}>
         {!empresaSelecionada ? (
           <>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>

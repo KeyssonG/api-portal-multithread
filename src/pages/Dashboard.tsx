@@ -36,9 +36,9 @@ const Dashboard = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', paddingTop: '70px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f9f9f9' }}>
       <Header />
-      <main className={styles.dashboard}>
+      <main className={styles.dashboard} style={{ flex: 1 }}>
         <h2 className={styles.title}>Painel de Controle</h2>
         
         {loading && <p className={styles.loading}>Carregando estatísticas...</p>}

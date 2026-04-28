@@ -5,14 +5,14 @@ import styles from "../styles/GestaoAcesso.module.css";
 
 const GestaoAcesso = () => {
   return (
-    <div className={styles.container}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f4f7fa' }}>
       <Header />
-      <div className={styles.content}>
+      <main style={{ flex: 1, padding: '100px 2rem 40px', maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
         <LinkModuloForm
           onSuccess={() => {}}
           onError={() => {}}
         />
-      </div>
+      </main>
       <Footer />
     </div>
   );

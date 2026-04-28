@@ -142,10 +142,10 @@ const Modulos = () => {
   );
 
   return (
-    <div style={{ backgroundColor: '#f4f7fa', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: '#f4f7fa', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Header />
       
-      <main className={styles.dashboard} style={{ padding: '100px 2rem 40px', maxWidth: '1400px', margin: '0 auto' }}>
+      <main className={styles.dashboard} style={{ flex: 1, padding: '100px 2rem 40px', maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
         
         {/* Navigation Tabs */}
         <div style={{ display: 'flex', gap: '10px', marginBottom: '2.5rem', backgroundColor: 'white', padding: '8px', borderRadius: '14px', width: 'fit-content', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>
