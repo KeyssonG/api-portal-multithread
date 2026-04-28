@@ -231,27 +231,37 @@ const Modulos = () => {
                   <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 10px', tableLayout: 'fixed' }}>
                     <thead>
                       <tr style={{ textAlign: 'left' }}>
-                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '10%', textAlign: 'center' }}>ID</th>
-                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '35%' }}>Empresa</th>
-                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '25%' }}>Módulo</th>
-                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '15%', textAlign: 'center' }}>Status</th>
-                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '15%', textAlign: 'center' }}>Ações</th>
+                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '6%', textAlign: 'center' }}>ID</th>
+                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '28%' }}>Empresa</th>
+                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '40%' }}>Módulo</th>
+                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '14%', textAlign: 'center' }}>Status</th>
+                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '12%', textAlign: 'center' }}>Ações</th>
                       </tr>
                     </thead>
                     <tbody>
                       {filteredLinks.map(link => (
                         <tr key={link.id} style={{ backgroundColor: '#fcfcfc', transition: 'all 0.2s' }}>
-                          <td style={{ padding: '1.2rem 1rem', borderRadius: '12px 0 0 12px', border: '1px solid #f0f0f0', borderRight: 'none', textAlign: 'center', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          <td style={{ padding: '1.2rem 1rem', borderRadius: '12px 0 0 12px', border: '1px solid #f0f0f0', borderRight: 'none', textAlign: 'center' }}>
                             <span style={{ fontWeight: '800', color: '#1a237e', backgroundColor: '#eef2ff', padding: '4px 8px', borderRadius: '6px', fontSize: '0.85rem' }}>#{link.id}</span>
                           </td>
-                          <td style={{ padding: '1.2rem 1rem', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          <td style={{ padding: '1.2rem 1rem', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0' }}>
                             <div>
-                              <div style={{ fontWeight: '700', color: '#333', fontSize: '1.05rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{link.companyName}</div>
+                              <div style={{ fontWeight: '700', color: '#333', fontSize: '1.05rem', lineHeight: '1.2' }}>{link.companyName}</div>
                               <div style={{ fontSize: '0.75rem', color: '#999' }}>Cód: {link.companyId}</div>
                             </div>
                           </td>
-                          <td style={{ padding: '1.2rem 1rem', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            <span style={{ backgroundColor: '#e3f2fd', color: '#1976d2', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '0.9rem', border: '1px solid #bbdefb', whiteSpace: 'nowrap' }}>
+                          <td style={{ padding: '1.2rem 1rem', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0' }}>
+                            <span style={{ 
+                              backgroundColor: '#e3f2fd', 
+                              color: '#1976d2', 
+                              padding: '6px 12px', 
+                              borderRadius: '8px', 
+                              fontWeight: '700', 
+                              fontSize: '0.9rem', 
+                              border: '1px solid #bbdefb',
+                              display: 'inline-block',
+                              lineHeight: '1.4'
+                            }}>
                               {link.moduloName}
                             </span>
                           </td>
