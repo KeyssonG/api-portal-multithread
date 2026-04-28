@@ -38,7 +38,7 @@ export interface UnlinkCompanyModuloRequest {
     moduloId: number;
 }
 
-export interface StatusEmpresaData {
+export interface UserChartData {
 
     data: string;
     quantidade: number;
