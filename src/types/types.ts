@@ -33,7 +33,13 @@ export interface CompanyModuloResponse {
     statusDescription: string;
 }
 
-export interface UserChartData {
+export interface UnlinkCompanyModuloRequest {
+    companyId: number;
+    moduloId: number;
+}
+
+export interface StatusEmpresaData {
+
     data: string;
     quantidade: number;
 }

@@ -37,6 +37,14 @@ const LinkModuloForm: React.FC<LinkModuloFormProps> = ({ onSuccess, onError }) =
   const [searchModulo, setSearchModulo] = useState('');
   const [searchLinks, setSearchLinks] = useState('');
 
+  // Confirmation Popup State
+  const [confirmPopup, setConfirmPopup] = useState<{
+    show: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({ show: false, title: '', message: '', onConfirm: () => {} });
+
   // Form State
   const [selectedModulo, setSelectedModulo] = useState<CompanyModuloDTO | null>(null);
   const [selectedFuncionario, setSelectedFuncionario] = useState<FuncionarioConsulta | null>(null);
@@ -160,6 +168,35 @@ const LinkModuloForm: React.FC<LinkModuloFormProps> = ({ onSuccess, onError }) =
     }
   };
 
+  const handleDeleteLink = (userId: number, moduloId: number) => {
+    if (!token || !selectedCompany) return;
+    
+    setConfirmPopup({
+      show: true,
+      title: "Confirmar Remoção",
+      message: "Tem certeza que deseja remover este vínculo de acesso?",
+      onConfirm: async () => {
+        setConfirmPopup(prev => ({ ...prev, show: false }));
+        setLoadingDados(true);
+        try {
+          await moduloService.deleteLinkUserModuloPortal({
+            userId,
+            moduloId,
+            companyId: selectedCompany.id
+          });
+          setPopupMessage({ title: 'Sucesso!', message: 'Acesso removido com sucesso!', type: 'success' });
+          await loadUserLinks();
+        } catch (error: any) {
+          console.error('Erro ao remover vínculo:', error);
+          const msg = error.response?.data?.message || 'Erro inesperado ao remover acesso.';
+          setPopupMessage({ title: 'Erro ao Remover', message: msg, type: 'error' });
+        } finally {
+          setLoadingDados(false);
+        }
+      }
+    });
+  };
+
   const filteredModulos = modulos.filter(m =>
     m.moduloName.toLowerCase().includes(searchModulo.toLowerCase())
   );
@@ -277,7 +314,12 @@ const LinkModuloForm: React.FC<LinkModuloFormProps> = ({ onSuccess, onError }) =
                         <span style={{ backgroundColor: '#e3f2fd', color: '#1976d2', padding: '6px 12px', borderRadius: '8px', fontWeight: '700', fontSize: '0.9rem' }}>{link.moduloName}</span>
                       </td>
                       <td style={{ padding: '1.2rem 1rem', borderRadius: '0 12px 12px 0', border: '1px solid #f0f0f0', borderLeft: 'none', borderTop: 'none', textAlign: 'center' }}>
-                         <button style={{ color: '#e53935', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '700' }}>Remover</button>
+                         <button 
+                            onClick={() => handleDeleteLink(link.userId, link.moduloId)}
+                            style={{ color: '#e53935', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '700' }}
+                          >
+                            Remover
+                          </button>
                       </td>
                     </tr>
                   ))}
@@ -523,6 +565,31 @@ const LinkModuloForm: React.FC<LinkModuloFormProps> = ({ onSuccess, onError }) =
               to { opacity: 1; transform: scale(1); }
             }
           `}} />
+        </div>
+      )}
+
+      {/* Confirmation Popup */}
+      {confirmPopup.show && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 5000, padding: '20px', backdropFilter: 'blur(3px)' }}>
+          <div style={{ backgroundColor: 'white', padding: '2.5rem', borderRadius: '16px', maxWidth: '450px', width: '100%', textAlign: 'center', boxShadow: '0 10px 40px rgba(0,0,0,0.2)', animation: 'fadeIn 0.3s ease-out' }}>
+            <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>⚠️</div>
+            <h3 style={{ margin: '0 0 1rem 0', color: '#1a237e', fontSize: '1.4rem', fontWeight: '800' }}>{confirmPopup.title}</h3>
+            <p style={{ color: '#666', marginBottom: '2rem', lineHeight: '1.5', fontSize: '1rem' }}>{confirmPopup.message}</p>
+            <div style={{ display: 'flex', gap: '15px' }}>
+              <button 
+                onClick={() => setConfirmPopup(prev => ({ ...prev, show: false }))}
+                style={{ flex: 1, padding: '12px', backgroundColor: '#f0f0f0', color: '#333', border: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '1.1rem', cursor: 'pointer' }}
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={confirmPopup.onConfirm}
+                style={{ flex: 1, padding: '12px', backgroundColor: '#e53935', color: 'white', border: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '1.1rem', cursor: 'pointer' }}
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

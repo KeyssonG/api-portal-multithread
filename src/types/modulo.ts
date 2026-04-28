@@ -10,6 +10,12 @@ export interface LinkUserModuloRequest {
   moduloId: number;
 }
 
+export interface PortalUnlinkUserModuloRequest {
+  userId: number;
+  moduloId: number;
+  companyId: number;
+}
+
 export interface UserModuloResponse {
   id: number;
   userId: number;

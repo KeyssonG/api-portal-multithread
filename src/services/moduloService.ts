@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import type { Modulo } from "../types/types";
 import api from "./apiService";
-import type { CompanyModuloDTO, LinkUserModuloRequest, UserModuloResponse } from "../types/modulo";
+import type { CompanyModuloDTO, LinkUserModuloRequest, UserModuloResponse, PortalUnlinkUserModuloRequest } from "../types/modulo";
 
 export const fetchModulos = async (id?: string): Promise<Modulo[]> => {
     try {
@@ -47,6 +47,18 @@ export const moduloService = {
         return response.data;
       } catch (error) {
         console.error('Erro ao buscar vínculos de usuários:', error);
+        throw error;
+      }
+    },
+
+    // Desvincula usuário do módulo usando o endpoint específico do Portal
+    async deleteLinkUserModuloPortal(data: PortalUnlinkUserModuloRequest): Promise<void> {
+      try {
+        await api.delete('/administracao/portal/usuario/modulo', {
+          data: data
+        });
+      } catch (error) {
+        console.error('Erro ao desvincular usuário do módulo:', error);
         throw error;
       }
     }

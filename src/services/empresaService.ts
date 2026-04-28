@@ -75,11 +75,28 @@ export const linkCompanyModulo = async (companyId: number, moduloId: number, sta
             moduloId,
             status
         });
-    } catch (err) {
+        } catch (err) {
         let errorMessage = 'Erro ao vincular empresa ao módulo';
         if (axios.isAxiosError(err)) {
             errorMessage = err.response?.data?.message || errorMessage;
         }
         throw new Error(errorMessage);
-    }
-};
+        }
+        };
+
+        export const deleteLinkCompanyModulo = async (companyId: number, moduloId: number): Promise<void> => {
+        try {
+        await api.delete('/administracao/empresa/modulo', {
+            data: {
+                companyId,
+                moduloId
+            }
+        });
+        } catch (err) {
+        let errorMessage = 'Erro ao desvincular empresa do módulo';
+        if (axios.isAxiosError(err)) {
+            errorMessage = err.response?.data?.message || errorMessage;
+        }
+        throw new Error(errorMessage);
+        }
+        };

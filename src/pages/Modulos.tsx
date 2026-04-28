@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import type { Modulo, CompanyResponseDTO, CompanyModuloResponse } from "../types/types";
 import { fetchModulos } from "../services/moduloService";
-import { getCompaniesByStatus, linkCompanyModulo, getCompanyModulos } from "../services/empresaService";
+import { getCompaniesByStatus, linkCompanyModulo, getCompanyModulos, deleteLinkCompanyModulo } from "../services/empresaService";
 
 const Modulos = () => {
   // UI Control
@@ -28,6 +28,14 @@ const Modulos = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [moduleSearch, setModuleSearch] = useState("");
   const [linksSearch, setLinksSearch] = useState("");
+
+  // Confirmation Popup State
+  const [confirmPopup, setConfirmPopup] = useState<{
+    show: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({ show: false, title: '', message: '', onConfirm: () => {} });
 
   // Load Initial Data
   useEffect(() => {
@@ -93,6 +101,28 @@ const Modulos = () => {
     } finally {
       setLinking(false);
     }
+  };
+
+  const handleDeleteLink = (companyId: number, moduloId: number) => {
+    setConfirmPopup({
+      show: true,
+      title: "Confirmar Remoção",
+      message: "Tem certeza que deseja remover este vínculo? Esta ação também removerá todos os usuários vinculados a este módulo nesta empresa.",
+      onConfirm: async () => {
+        setConfirmPopup(prev => ({ ...prev, show: false }));
+        setLoading(true);
+        setError(null);
+        try {
+          await deleteLinkCompanyModulo(companyId, moduloId);
+          setSuccessMessage("Vínculo removido com sucesso!");
+          await loadLinks();
+        } catch (err) {
+          setError("Erro ao remover vínculo.");
+        } finally {
+          setLoading(false);
+        }
+      }
+    });
   };
 
   // Filters
@@ -202,9 +232,10 @@ const Modulos = () => {
                     <thead>
                       <tr style={{ textAlign: 'left' }}>
                         <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '10%', textAlign: 'center' }}>ID</th>
-                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '40%' }}>Empresa</th>
-                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '30%' }}>Módulo</th>
-                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '20%', textAlign: 'center' }}>Status</th>
+                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '35%' }}>Empresa</th>
+                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '25%' }}>Módulo</th>
+                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '15%', textAlign: 'center' }}>Status</th>
+                        <th style={{ padding: '1rem', color: '#94a3b8', fontSize: '0.75rem', textTransform: 'uppercase', width: '15%', textAlign: 'center' }}>Ações</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -224,10 +255,18 @@ const Modulos = () => {
                               {link.moduloName}
                             </span>
                           </td>
-                          <td style={{ padding: '1.2rem 1rem', borderRadius: '0 12px 12px 0', border: '1px solid #f0f0f0', borderLeft: 'none', textAlign: 'center' }}>
+                          <td style={{ padding: '1.2rem 1rem', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0', textAlign: 'center' }}>
                             <span style={{ backgroundColor: '#e8f5e9', color: '#2e7d32', padding: '6px 12px', borderRadius: '20px', fontSize: '0.75rem', fontWeight: '800', textTransform: 'uppercase', display: 'inline-block', whiteSpace: 'nowrap' }}>
                               {link.statusDescription}
                             </span>
+                          </td>
+                          <td style={{ padding: '1.2rem 1rem', borderRadius: '0 12px 12px 0', border: '1px solid #f0f0f0', borderLeft: 'none', textAlign: 'center' }}>
+                            <button 
+                              onClick={() => handleDeleteLink(link.companyId, link.moduloId)}
+                              style={{ color: '#e53935', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '700', fontSize: '0.85rem' }}
+                            >
+                              Remover
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -368,6 +407,32 @@ const Modulos = () => {
           </div>
         )}
       </main>
+
+      {/* Confirmation Popup */}
+      {confirmPopup.show && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 5000, padding: '20px', backdropFilter: 'blur(3px)' }}>
+          <div style={{ backgroundColor: 'white', padding: '2.5rem', borderRadius: '16px', maxWidth: '450px', width: '100%', textAlign: 'center', boxShadow: '0 10px 40px rgba(0,0,0,0.2)', animation: 'fadeIn 0.3s ease-out' }}>
+            <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>⚠️</div>
+            <h3 style={{ margin: '0 0 1rem 0', color: '#1a237e', fontSize: '1.4rem', fontWeight: '800' }}>{confirmPopup.title}</h3>
+            <p style={{ color: '#666', marginBottom: '2rem', lineHeight: '1.5', fontSize: '1rem' }}>{confirmPopup.message}</p>
+            <div style={{ display: 'flex', gap: '15px' }}>
+              <button 
+                onClick={() => setConfirmPopup(prev => ({ ...prev, show: false }))}
+                style={{ flex: 1, padding: '12px', backgroundColor: '#f0f0f0', color: '#333', border: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '1.1rem', cursor: 'pointer' }}
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={confirmPopup.onConfirm}
+                style={{ flex: 1, padding: '12px', backgroundColor: '#e53935', color: 'white', border: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '1.1rem', cursor: 'pointer' }}
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
       <style>{`
         @keyframes modalFadeIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
