@@ -9,6 +9,8 @@ import { DashboardProvider } from './contexts/DashboardContextType';
 import CadastroFuncionario from './pages/cadastroFuncionario';
 import { PrivateRoute } from './components/PrivateRoute';
 import { UserProjectionPage } from './components/UserProjectionPage';
+import ResetSenhaSolicitar from './pages/ResetSenhaSolicitar';
+import ResetSenhaConfirmar from './pages/ResetSenhaConfirmar';
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/cadastrar" element={<CadastroFuncionario />} />
+            <Route path="/reset-senha/solicitar" element={<ResetSenhaSolicitar />} />
+            <Route path="/reset-senha/confirmar" element={<ResetSenhaConfirmar />} />
             <Route path='/dashboard' element={
               <PrivateRoute>
                 <DashboardProvider>
