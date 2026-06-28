@@ -62,21 +62,14 @@ pipeline {
 
         stage('Atualizar deployment.yaml (GitOps)') {
             steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: 'be0b606d-4fdf-492f-a432-d091286311f4',
-                        usernameVariable: 'GIT_USER',
-                        passwordVariable: 'GIT_TOKEN'
-                    )
-                ]) {
+                withCredentials([gitUsernamePassword(credentialsId: 'Github')]) {
                     sh '''
                         git checkout master
 
                         git config user.email "jenkins@pipeline.com"
                         git config user.name "Jenkins"
 
-                        GIT_TOKEN_ENCODED=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$GIT_TOKEN', safe=''))")
-                        git remote set-url origin https://$GIT_USER:$GIT_TOKEN_ENCODED@github.com/KeyssonG/api-portal-multithread.git
+                        git remote set-url origin https://github.com/KeyssonG/api-portal-multithread.git
 
                         sed -i "s|image: .*|image: $DOCKERHUB_IMAGE:$IMAGE_TAG|" $DEPLOYMENT_FILE
 
