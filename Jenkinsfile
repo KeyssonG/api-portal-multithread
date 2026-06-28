@@ -64,7 +64,7 @@ pipeline {
             steps {
                 withCredentials([
                     usernamePassword(
-                        credentialsId: 'Github',
+                        credentialsId: 'be0b606d-4fdf-492f-a432-d091286311f4',
                         usernameVariable: 'GIT_USER',
                         passwordVariable: 'GIT_TOKEN'
                     )
@@ -75,7 +75,8 @@ pipeline {
                         git config user.email "jenkins@pipeline.com"
                         git config user.name "Jenkins"
 
-                        git remote set-url origin https://$GIT_USER:$GIT_TOKEN@github.com/KeyssonG/api-portal-multithread.git
+                        GIT_TOKEN_ENCODED=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$GIT_TOKEN', safe=''))")
+                        git remote set-url origin https://$GIT_USER:$GIT_TOKEN_ENCODED@github.com/KeyssonG/api-portal-multithread.git
 
                         sed -i "s|image: .*|image: $DOCKERHUB_IMAGE:$IMAGE_TAG|" $DEPLOYMENT_FILE
 
