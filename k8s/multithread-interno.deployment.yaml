@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: multithread-interno-container
-          image: keyssong/react-multithread-interno:latest  
+          image: keyssong/react-multithread-interno:latest
           imagePullPolicy: Always              
           ports:
             - containerPort: 5174                
