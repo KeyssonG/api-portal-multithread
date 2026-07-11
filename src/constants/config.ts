@@ -3,9 +3,9 @@ const getBaseUrl = () => {
     return import.meta.env.VITE_API_URL;
   }
   if (import.meta.env.DEV) {
-    return 'http://localhost:8085';
+    return 'http://localhost:31000';
   }
-  return 'http://localhost:31000';
+  return '';
 };
 
 export const API_CONFIG = {
