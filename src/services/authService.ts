@@ -25,10 +25,10 @@ export const authService = {
   },
 
   async solicitarResetSenha(email: string) {
-    return authApi.post('/reset-senha/solicitar', { email });
+    return authApi.post(API_CONFIG.ENDPOINTS.RESET_SENHA_SOLICITAR, { email });
   },
 
   async confirmarResetSenha(token: string, newPassword: string) {
-    return authApi.post('/reset-senha/confirmar', { token, newPassword });
+    return authApi.post(API_CONFIG.ENDPOINTS.RESET_SENHA_CONFIRMAR, { token, newPassword });
   }
 };
