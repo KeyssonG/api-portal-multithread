@@ -30,7 +30,7 @@ export const getCompanyModulos = async (): Promise<CompanyModuloResponse[]> => {
 
 export const fechEmpresaPendentes = async (): Promise<EmpresaPendente[]> => {
     try {
-        const response = await api.get<EmpresaPendente[]>('/administracao/empresa/pendente/?numeroConta=');
+        const response = await api.get<EmpresaPendente[]>('/administracao/empresa/pendente/');
         return response.data;
     } catch (err) {
         let errorMessage = 'Erro ao buscar empresas pendentes';
