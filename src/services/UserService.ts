@@ -1,8 +1,9 @@
 import axios from "axios";
+import { API_CONFIG } from "../constants/config";
 import type { UserData, UserError } from "../types/types";
 
 const empresaAPI = axios.create({
-    baseURL: "http://localhost:8085",
+    baseURL: API_CONFIG.BASE_URL,
 })
 
 empresaAPI.interceptors.request.use((config) => {
