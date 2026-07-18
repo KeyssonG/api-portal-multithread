@@ -13,8 +13,8 @@ export const API_CONFIG = {
   ENDPOINTS: {
     LOGIN_MULTITHREAD: '/login-multithread',
     ALTERAR_SENHA: '/alterar/senha',
-    RESET_SENHA_SOLICITAR: '/reset-senha/solicitar',
-    RESET_SENHA_CONFIRMAR: '/reset-senha/confirmar',
+    RESET_SENHA_SOLICITAR: '/ad/reset-senha/solicitar',
+    RESET_SENHA_CONFIRMAR: '/ad/reset-senha/confirmar',
     CADASTRAR_FUNCIONARIO: '/cadastrar/funcionario-multithread',
     USERS: '/users',
     INTERNAL_EMPLOYEES_DEPARTAMENTO: '/internal/employees',
