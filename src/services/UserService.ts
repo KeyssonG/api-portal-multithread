@@ -1,19 +1,5 @@
-import axios from "axios";
-import { API_CONFIG } from "../constants/config";
+import api from "./apiService";
 import type { UserData, UserError } from "../types/types";
-
-const empresaAPI = axios.create({
-    baseURL: API_CONFIG.BASE_URL,
-})
-
-empresaAPI.interceptors.request.use((config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-        config.headers = config.headers || {};
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-})
 
 export const getUserData = async (dataInicio?: string, dataFim?: string): Promise<UserData> => {
     try {
@@ -27,7 +13,7 @@ export const getUserData = async (dataInicio?: string, dataFim?: string): Promis
             url += `?${params.toString()}`;
         }
 
-        const response = await empresaAPI.get<UserData>(url);
+        const response = await api.get<UserData>(url);
         return response.data;
     } catch (err: any) {
         if (err.response?.status === 400) {

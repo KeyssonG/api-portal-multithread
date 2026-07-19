@@ -122,9 +122,9 @@ const LinkModuloForm: React.FC<LinkModuloFormProps> = ({ onSuccess, onError }) =
       const finalDataFim = dataFim || new Date().toISOString().split('T')[0];
 
       if (departamentoSelecionado === "") {
-        data = await funcionarioService.buscarFuncionariosPorEmpresa(selectedCompany.id, finalDataInicio, finalDataFim, token);
+        data = await funcionarioService.buscarFuncionariosPorEmpresa(selectedCompany.id, finalDataInicio, finalDataFim);
       } else {
-        data = await funcionarioService.buscarFuncionariosPorEmpresaEDepartamento(selectedCompany.id, departamentoSelecionado, finalDataInicio, finalDataFim, token);
+        data = await funcionarioService.buscarFuncionariosPorEmpresaEDepartamento(selectedCompany.id, departamentoSelecionado, finalDataInicio, finalDataFim);
       }
       setFuncionarios(data || []);
       if (!data || data.length === 0) {
