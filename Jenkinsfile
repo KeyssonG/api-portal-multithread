@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_IMAGE = "keyssong/react-multithread-interno"
         IMAGE_TAG = "latest"
+        DOCKER_PATH = "C:\\Users\\keyss\\AppData\\Local\\Programs\\Rancher Desktop\\resources\\resources\\win32\\bin"
     }
 
     triggers {
