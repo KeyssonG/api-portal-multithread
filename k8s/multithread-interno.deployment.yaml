@@ -13,7 +13,7 @@ spec:
       labels:
         app: multithread-interno-react
       annotations:
-        kubectl.io/restartedAt: 2026-07-28T22:47:09.8867784-03:00
+        kubectl.io/restartedAt: 2026-07-28T22:51:53.6588288-03:00
     spec:
       containers:
         - name: multithread-interno-container
