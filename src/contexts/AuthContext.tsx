@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect, useContext, type ReactNode } from "react";
+import { createContext, useState, useEffect, useContext, useCallback, type ReactNode } from "react";
+import { isTokenExpired, getJwtPayload } from "../utils/jwt";
 
 type AuthContextType = {
     token: string | null;
@@ -23,35 +24,48 @@ type AuthProviderProps = {
     children: ReactNode;
 };
 
+function initAuthState(): { token: string | null; name: string | null } {
+    const storedToken = localStorage.getItem('token');
+    const storedName = localStorage.getItem('userName');
+    if (storedToken && isTokenExpired(storedToken)) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userName');
+        return { token: null, name: null };
+    }
+    return { token: storedToken, name: storedName };
+}
+
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-    const [token, setToken] = useState<string | null>(null);
-    const [name, setName] = useState<string | null>(null);
+    const [initial] = useState(initAuthState);
+    const [token, setToken] = useState<string | null>(initial.token);
+    const [name, setName] = useState<string | null>(initial.name);
 
-    useEffect(() => {
-        const storedToken = localStorage.getItem('token');
-        const storedName = localStorage.getItem('userName');
-        if (storedToken) {
-            setToken(storedToken);
-        }
-
-        if (storedName) {
-            setName(storedName);
-        }
-    }, []);
-
-    const login = (newToken: string, newName: string) => {
-        localStorage.setItem('token', newToken);
-        localStorage.setItem('userName', newName);
-        setToken(newToken);
-        setName(newName);
-    };
-
-    const logout = () => {
+    const logout = useCallback(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('userName');
         setToken(null);
         setName(null);
-    };
+    }, []);
+
+    const login = useCallback((newToken: string, newName: string) => {
+        localStorage.setItem('token', newToken);
+        localStorage.setItem('userName', newName);
+        setToken(newToken);
+        setName(newName);
+    }, []);
+
+    useEffect(() => {
+        if (!token) return;
+        const payload = getJwtPayload(token);
+        if (!payload || typeof payload.exp !== 'number') return;
+        const msUntilExpiration = payload.exp * 1000 - Date.now();
+        if (msUntilExpiration <= 0) {
+            logout();
+            return;
+        }
+        const timeoutId = window.setTimeout(() => logout(), msUntilExpiration);
+        return () => window.clearTimeout(timeoutId);
+    }, [token, logout]);
 
     const value = {
         token,

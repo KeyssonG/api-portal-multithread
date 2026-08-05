@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_CONFIG } from '../constants/config';
+import { isTokenExpired } from '../utils/jwt';
 
 const api = axios.create({
   baseURL: API_CONFIG.BASE_URL,
@@ -8,6 +9,12 @@ const api = axios.create({
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('token');
   if (token) {
+    if (isTokenExpired(token)) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userName');
+      window.location.href = '/login';
+      return Promise.reject(new Error('Sessão expirada'));
+    }
     config.headers = config.headers || {};
     config.headers.Authorization = `Bearer ${token}`;
   }
